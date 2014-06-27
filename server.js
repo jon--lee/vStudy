@@ -1,11 +1,25 @@
-var static = require('node-static');
-var http = require('http');
-var file = new(static.Server)();
-var app = http.createServer(function (req, res) {
-  file.serve(req, res);
-}).listen(2013);
+var express = require('express');
+var app = express();
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
+var uuid = require('node-uuid');
 
-var io = require('socket.io').listen(app);
+
+app.get('/', function(req, res){
+    res.sendfile('index.html');
+});
+
+app.use(express.static(__dirname + '/public'));
+
+http.listen(3000, function(){
+    console.log('listening on *:3000');
+});
+
+
+
+
+
+
 io.sockets.on('connection', function (socket){
 
 	function log(){

@@ -20,5 +20,10 @@
   "bugs": {
     "url": "https://github.com/jon--lee/video_stream_test/issues"
   },
-  "homepage": "https://github.com/jon--lee/video_stream_test"
+  "homepage": "https://github.com/jon--lee/video_stream_test",
+  "dependencies": {
+    "express": "^4.4.4",
+    "node-uuid": "^1.4.1",
+    "socket.io": "^1.0.6"
+  }
 }
