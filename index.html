@@ -1,33 +1,47 @@
 <!DOCTYPE html>
 <html>
-<head>
+    <head>
 
-<meta name='keywords' content='WebRTC, HTML5, JavaScript' />
-<meta name='description' content='WebRTC Reference App' />
-<meta name='viewport' content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1'>
+        <meta name='keywords' content='HTML5, JavaScript' />
+        <meta name='description' content='vchat demonstration' />
+        <meta name='viewport' content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1'>
 
-<base target='_blank'>
+        <base target='_blank'>
 
-<title>WebRTC client</title>
+        <title>Video Chat </title>
 
-<!-- <link rel='stylesheet' href='css/main.css' /> -->
+    <!-- <link rel='stylesheet' href='css/main.css' /> -->
 
-</head>
+    </head>
 
-<body>
+    <body>
 
-<div id='container'>
+        <div id='container'>
 
-  <div id='videos'>
-    <video id='localVideo' autoplay muted></video>
-    <video id='remoteVideo' autoplay></video>
-  </div>
+            <div id='videos'>
+                <video id='localVideo' autoplay muted></video>
+                <video id='remoteVideo' autoplay></video>
+                <button id='callButton'>call</button>
+                <button id='hangupButton'>hang up</button>
+            </div>
 
-</div>
+        </div>
 
-<script src='/socket.io/socket.io.js'></script>
-<script src='js/lib/adapter.js'></script>
-<script src='js/main.js'></script>
+        <script type='text/javascript' src='js/jquery.js'></script>
+        <script type='text/javascript' src='/socket.io/socket.io.js'></script>
+        <script type='text/javascript' src='js/lib/adapter.js'></script>
+        <script type='text/javascript' src='js/main.js'></script>
+        <script type='text/javascript'>
+            $('#hangupButton').click(function(){
+                localStream.stop();
+                isStarted = false;
+            });
+            $('#callButton').click(function(){
+                //first must check if both sockets are connected but for now this is testing to see
+                //if it can reestablish a connection after closing the peer connection
+                getUserMedia(constraints, handleUserMedia, handleUserMediaError);
+            });
+        </script>
 
-</body>
+    </body>
 </html>

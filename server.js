@@ -9,6 +9,10 @@ app.get('/', function(req, res){
     res.sendfile('index.html');
 });
 
+app.get('/about/', function(req, res){
+    res.sendfile('about.html');
+});
+
 app.use(express.static(__dirname + '/public'));
 
 http.listen(process.env.PORT ||3000, function(){
@@ -17,11 +21,12 @@ http.listen(process.env.PORT ||3000, function(){
 
 
 
-
+var roomsClient = {};
 
 
 io.sockets.on('connection', function (socket){
 
+    roomsClient[socket.id] = [];
 	function log(){
 		var array = [">>> Message from server: "];
 	  for (var i = 0; i < arguments.length; i++) {
@@ -45,10 +50,12 @@ io.sockets.on('connection', function (socket){
 
 		if (numClients == 0){
 			socket.join(room);
+            roomsClient[socket.id].push(room);
 			socket.emit('created', room);
 		} else if (numClients == 1) {
 			io.sockets.in(room).emit('join', room);
 			socket.join(room);
+            roomsClient[socket.id].push(room);
 			socket.emit('joined', room);
 		} else { // max two clients
 			socket.emit('full', room);
@@ -57,7 +64,21 @@ io.sockets.on('connection', function (socket){
 		socket.broadcast.emit('broadcast(): client ' + socket.id + ' joined room ' + room);
 
 	});
-
+    
+    socket.on("leaveRoom", function(room){
+        socket.leave(room);
+        socket.broadcast.to(room).emit("peerLeft", room);
+    });
+    
+    socket.on("disconnect", function(){
+        for (var i = 0; i < roomsClient[socket.id].length; i++)
+        {
+            room = roomsClient[socket.id][i];
+            socket.leave(room);
+            socket.broadcast.to(room).emit("peerLeft", room);
+        }
+    });
+    
 });
 
 

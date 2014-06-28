@@ -54,6 +54,11 @@ socket.on('joined', function (room){
   isChannelReady = true;
 });
 
+socket.on('peerLeft', function(room){
+    console.log("your peer left the room");
+    //isChannelReady = false;
+    hangup();
+});
 socket.on('log', function (array){
   console.log.apply(console, array);
 });
@@ -75,6 +80,7 @@ function sendMessage(message){
 socket.on('message', function (message){
   console.log('Client received message:', message);
   if (message === 'got user media') {
+      isStarted = false;
   	maybeStart();
   } else if (message.type === 'offer') {
     if (!isInitiator && !isStarted) {
@@ -124,6 +130,7 @@ if (location.hostname != "localhost") {
 }
 
 function maybeStart() {
+    console.log("isStarted: " + isStarted + " and isChannelReady: " + isChannelReady);
   if (!isStarted && typeof localStream != 'undefined' && isChannelReady) {
     createPeerConnection();
     pc.addStream(localStream);
