@@ -32,7 +32,7 @@ http.listen(process.env.PORT ||3000, function(){
 var indexNSP = io.of("/index");
 
 indexNSP.on("connection", function(socket){
-
+    console.log("yo this index dude joined a session");
 });
 /*end handling the index server side */
 
@@ -45,8 +45,9 @@ var sessionNSP = io.of("/session");
 
 var roomsClient = {};
 
-//io.sockets.on('connection', function (socket){
-sessionNSP.on('connection', function (socket){
+
+io.sockets.on('connection', function (socket){
+    console.log("yo this session dude joined a session");
     roomsClient[socket.id] = [];
 	function log(){
 		var array = [">>> Message from server: "];
@@ -64,7 +65,7 @@ sessionNSP.on('connection', function (socket){
 	});
 
 	socket.on('create or join', function (room) {
-		var numClients = getNumClients(room);
+		var numClients = findClientsSocketByRoomId(room).length;
 
 		log('Room ' + room + ' has ' + numClients + ' client(s)');
 		log('Request to create or join room', room);
@@ -74,7 +75,7 @@ sessionNSP.on('connection', function (socket){
             roomsClient[socket.id].push(room);
 			socket.emit('created', room);
 		} else if (numClients == 1) {
-			sessionNSP.in(room).emit('join', room);
+			io.sockets.in(room).emit('join', room);
 			socket.join(room);
             roomsClient[socket.id].push(room);
 			socket.emit('joined', room);
@@ -88,9 +89,7 @@ sessionNSP.on('connection', function (socket){
     
     socket.on("leaveRoom", function(room){
         socket.leave(room);
-        console.log("broadcasting to room that peer left");
         socket.broadcast.to(room).emit("peerLeft", room);
-        delete roomsClient[socket.id];
     });
     
     socket.on("disconnect", function(){
@@ -98,29 +97,12 @@ sessionNSP.on('connection', function (socket){
         {
             room = roomsClient[socket.id][i];
             socket.leave(room);
-            console.log("broadcasting to room that peer left");
             socket.broadcast.to(room).emit("peerLeft", room);
         }
-        delete roomsClient[socket.id];
     });
     
 });
 
-
-//the room at key "room" must be defined (this method does not check for that and will throw an error
-function getNumClients(room)
-{
-    var count = 0;
-    for (var clientId in roomsClient)
-    {
-        var i = roomsClient[clientId].indexOf(room);
-        if(i > -1)
-        {
-            count++;
-        }
-    }
-    return count;
-}
 
 function findClientsSocketByRoomId(roomId) {
 var res = []

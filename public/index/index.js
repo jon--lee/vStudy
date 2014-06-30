@@ -1,6 +1,7 @@
 $( document ).ready(function() {
-    var socket = io();
+    var socket = io("/index");
     
+    so
     
     $("#quickSessionButton").click(function(){
         if($("#linkInput").val() != "")

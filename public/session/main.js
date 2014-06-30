@@ -27,7 +27,8 @@ if (room === '') {
   //
 }
 
-var socket = io.connect();
+//var socket = io.connect();
+var socket = io("/session");
 
 if (room !== '') {
   console.log('Create or join room', room);
@@ -57,6 +58,7 @@ socket.on('joined', function (room){
 socket.on('peerLeft', function(room){
     console.log("your peer left the room");
     //isChannelReady = false;
+    isInitiator = true;
     hangup();
 });
 socket.on('log', function (array){
@@ -135,7 +137,7 @@ function maybeStart() {
     createPeerConnection();
     pc.addStream(localStream);
     isStarted = true;
-    console.log('isInitiator', isInitiator);
+    console.log('isInitiator: ', isInitiator);
     if (isInitiator) {
       doCall();
     }
