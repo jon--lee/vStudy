@@ -11,11 +11,11 @@ app.get('/', function(req, res){
     res.sendfile('public/index/index.html');
 });
 
-app.get('/about/', function(req, res){
+app.get('/session/', function(req, res){
     res.sendfile('public/about/index.html');
 });
 
-app.get('/session/', function(req, res){
+app.get('/testing/', function(req, res){
     res.sendfile('public/session/index.html');
 });
 
@@ -32,7 +32,18 @@ http.listen(process.env.PORT ||3000, function(){
 var indexNSP = io.of("/index");
 
 indexNSP.on("connection", function(socket){
-
+    socket.on("requestUuid", function(){
+        var code = uuid.v4();
+        socket.emit("getUuid", code);
+    });
+    
+    //the code that is sent here will determine the new link
+    //code should not be a link
+    socket.on("createSession", function(code){
+        app.get("/" + code + "/", function(req, res){
+            res.sendfile('public/session/index.html');
+        });
+    });
 });
 /*end handling the index server side */
 
