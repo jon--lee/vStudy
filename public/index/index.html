@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta name='keywords' content='homepage' />
+        <meta name='description' content='homepage' />
+        <meta name='viewport' content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1'>
+
+        <base target='_blank'>
+
+        <title>vStudy</title>
+        <link rel='stylesheet' type='text/css' href='../index/index.css'></style>
+
+    </head>
+
+    <body>
+        <div id='container'>
+            <div id='header'>
+                <div id='logoContainer'>
+                    <span style='font-size:40px'>v<span style='color: #000'>Study</span></span>
+                    <span id='navigationLinks'>
+                        <a href='signin' target="_self">Sign in</a>
+                        <a href='signup' target="_self">Sign up</a>
+                        <a href='about' target="_self">About</a>
+                        <a href='contact' target="_self">Contact us</a>
+                    </span>
+                </div>
+            </div>
+            <div id='content'>
+                <div id='signUpSection'>
+                    <center>
+                        <span style='font-size:30px;'>Studying made simple</span>
+                        <br>
+                        <input style='margin-top:5px;' id='linkInput' type='text' readonly>
+                        <button id='quickSessionButton'>Start a quick session here</button>
+                    </center>    
+                    <br>
+                    <div style="height: 1px; background-color: black; text-align: center">
+                        <span style="font-style:italic;padding-left:40px;padding-right:40px;background-color: #F1F1F1; position: relative; top: -0.5em;">
+                            or
+                        </span>
+                    </div> 
+                    <br>
+                    <center>
+                        <span style='margin-left: 40px;font-size:30px;'>Sign up <span style='color:#919191;font-size:20px'>to save your work</span></span>
+                        <form action='/signup/' method='POST'>
+                                <input name='email' type='text' placeholder='Email' />
+                                <input name='password' type='password' placeholder='Password' />
+                                <input type='submit' value="Sign up" name='submit' />
+                        </form>
+                    </center>
+                </div>
+            </div>
+            
+            <div id='footer'>
+			<ul>
+				<li>
+					2014 &copy; Jonathan Lee
+				</li>
+				<li>
+					<a href='about.php' target="_self">About</a>
+				</li>
+				<li>
+					<a href='contact.php' target="_self">Contact</a>
+				</li>
+			</ul>
+		</div>
+        </div>
+
+    <script src='../js/jquery.js'></script>
+    <script type='text/javascript' src='../socket.io/socket.io.js'></script>
+    <script src='../index/index.js'></script>
+
+    </body>
+
+</html>

@@ -6,11 +6,15 @@ var uuid = require('node-uuid');
 
 
 app.get('/', function(req, res){
-    res.sendfile('index.html');
+    res.sendfile('public/index/index.html');
 });
 
 app.get('/about/', function(req, res){
-    res.sendfile('about.html');
+    res.sendfile('public/about/index.html');
+});
+
+app.get('/session/', function(req, res){
+    res.sendfile('public/session/index.html');
 });
 
 app.use(express.static(__dirname + '/public'));
