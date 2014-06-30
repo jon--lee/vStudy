@@ -10,3 +10,8 @@ http.listen(process.env.PORT ||3000, function(){
 });
 
 also when creating the link for the video chat, the "/" at the end of the link matters. build functionality so that people will either end up on the same place, or the link won't matter (check main.js in the session folder for the room names and namespaces
+
+
+once officially decided, scale down the image for high speed loading
+for now, let js work after dom loads not content
+for deployment replace "$( window ).load(function(){" with "$(document).ready(function(){"

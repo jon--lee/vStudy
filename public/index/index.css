@@ -86,26 +86,7 @@ a
     
 }
 
-#quickSessionButton
-{
-    outline:none;
-    background:#41cb41;
-    border:0px;
-    border-bottom-left-radius:1px;
-    border-bottom-right-radius:1px;
-    color:white;
-    height:50px;
-    width:370px;
-    font-size:20px;
-    font-weight:normal;
-    font-family:helvetica-light;
-    cursor:pointer;
-}
 
-#quickSessionButton:active
-{
-    background:#3eb93e;
-}
 
 #signUpSection form
 {
@@ -117,27 +98,29 @@ a
     height:50px;
     width: 350px;
     border:0px;
-    border-top-left-radius: 1px;
-    border-top-right-radius:1px;
     padding-left:10px;
     padding-right:10px;
     font-size:14px;
 }
 
 
-#signUpSection input[type="submit"]
+.submitButton
 {
-    background:green;
-    width:370px;
-    background: #41cb41;
+    outline:none;
+    background:#41cb41;
+    border:0px;
+    border-bottom-left-radius:3px;
+    border-bottom-right-radius:3px;
     color:white;
+    height:50px;
+    width:370px;
     font-size:20px;
     font-weight:normal;
     font-family:helvetica-light;
     cursor:pointer;
 }
 
-#signUpSection input[type="submit"]:active
+.submitButton:active
 {
     background:#3eb93e;
 }

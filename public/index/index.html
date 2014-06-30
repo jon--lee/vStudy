@@ -32,7 +32,7 @@
                         <span style='font-size:30px;'>Studying made simple</span>
                         <br>
                         <input style='margin-top:5px;' id='linkInput' type='text' readonly>
-                        <button id='quickSessionButton'>Start a quick session here</button>
+                        <button class='submitButton'>Start a quick session</button>
                     </center>    
                     <br>
                     <div style="height: 1px; background-color: black; text-align: center">
@@ -43,10 +43,10 @@
                     <br>
                     <center>
                         <span style='margin-left: 40px;font-size:30px;'>Sign up <span style='color:#919191;font-size:20px'>to save your work</span></span>
-                        <form action='/signup/' method='POST'>
+                        <form action='/signup/' method='POST' target="_self">
                                 <input name='email' type='text' placeholder='Email' />
                                 <input name='password' type='password' placeholder='Password' />
-                                <input type='submit' value="Sign up" name='submit' />
+                                <button onclick="submit" class='submitButton'>Sign up</button>
                         </form>
                     </center>
                 </div>
