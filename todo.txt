@@ -1,0 +1,12 @@
+create functionality that checks if the link already exists
+get the code from the server not the client side (security risk)
+
+
+
+when doing the heroku thing, make sure the indexOf modules in socket.io (and elsewhere) are not ignored in the git ignore file
+also make sure that the server port is set to heroku's instead of local's ie 
+http.listen(process.env.PORT ||3000, function(){
+    //console.log('listening on *:3000');
+});
+
+also when creating the link for the video chat, the "/" at the end of the link matters. build functionality so that people will either end up on the same place, or the link won't matter (check main.js in the session folder for the room names and namespaces
