@@ -1,7 +1,8 @@
 body
 {
-    font-family: helvetica, arial;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", helvetica, arial, "Lucida Grande", "sans-serif";
     margin: 0px;
+    font-weight:lighter;
 }
 #container
 {
@@ -14,10 +15,10 @@ body
 #header
 {
     height:70px;
+    width:100%;
     /*background:#2885ce; old blue background */
     background: #f1f1f1;
     color: #919191;
-    font-family:helvetica-light;
 }
 
 
@@ -35,7 +36,7 @@ body
     padding-top:50px;
     background-image: url('media/banner_warm.png');
     background-size: 100% 100%;
-    background-repeat: no-repeat
+    background-repeat: no-repeat;
 }
 
 #content #bannerImage
@@ -81,7 +82,6 @@ a
     margin: auto;
     padding:10px;
     border-radius:10px;
-    font-family:helvetica-light;
     opacity:.90;
     
 }
@@ -116,8 +116,8 @@ a
     width:370px;
     font-size:20px;
     font-weight:normal;
-    font-family:helvetica-light;
     cursor:pointer;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", helvetica, arial, "Lucida Grande", "sans-serif";
 }
 
 .submitButton:active
@@ -151,10 +151,14 @@ a
 
 #footer ul {
 	display:inline;
-	list-style:none;	
+	list-style:none;
+    float:right;
+    margin-right:100px;
+    margin-top:5px;
 }
 #footer ul li{
-	margin:20px;
+	margin-left:20px;
+    margin-right:20px;
 	list-style:none;
 	display:inline;	
 }

@@ -8,30 +8,89 @@
 
         <base target='_blank'>
 
-        <title>Video Chat</title>
-        <link rel='stylesheet' type='text/css' href='../session/session.css'></style>
-    <!-- <link rel='stylesheet' href='css/main.css' /> -->
-
+        <title>vStudy Session</title>
+        <link rel='stylesheet' type='text/css' href='../session/session.css'></link>
+        <link rel='stylesheet' type='text/css' href='//code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css'></link>
+        
     </head>
 
     <body>
-
+        
         <div id='container'>
-
-            <div id='videos'>
-                <video id='localVideo' autoplay muted></video>
-                <video id='remoteVideo' autoplay></video>
-                <button id='callButton'>call</button>
-                <button id='hangupButton'>hang up</button>
+            <div id='header'>
+                <div id='menuItems'>
+                    <ul id='menuItems'>
+                        <li id='pencilButton' style='margin-right:2px;'>
+                            Pencil
+                            
+                        </li>
+                        <li id='pencilDetail' style='margin-left:0px;padding-left:6px;padding-right:6px'>
+                            v
+                            <div>
+                            
+                            </div>
+                        </li>
+                        <li id='selectorButton'>
+                            Selector
+                        </li>
+                        
+                        <li id='addButton'>
+                            +
+                        </li>
+                    </ul>
+                </div>
+                <div id='logoContainer'>
+                    <span style='font-size:40px'>v<span style='color: #000'>Study</span></span>
+                </div>
+                
             </div>
-
+                <div id='content'>
+                    <div id='videos'>
+                        <video id='localVideo' autoplay muted></video>
+                        <div id='spacer'>asdf</div>
+                        <video id='remoteVideo' autoplay></video>
+                    </div>
+                    <div id='canvasContent'>
+                        
+                        <canvas id='canvas' width="900" height="600"></canvas>
+                        <div class='draggableHelper' style="display:inline-block">
+                            <img id="image" class="ui-widget-content" style='' src='http://www.google.com.br/images/srpr/logo3w.png' />
+                        </div>
+                    </div>
+                </div>
+            
+            
         </div>
+        
 
         <script type='text/javascript' src='../js/jquery.js'></script>
+        <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
         <script type='text/javascript' src='../socket.io/socket.io.js'></script>
         <script type='text/javascript' src='../js/lib/adapter.js'></script>
         <script type='text/javascript' src='../session/main.js'></script>
         <script type='text/javascript'>
+            /////////////CANVAS SETUP CODE////////////////////
+            $('#image').resizable({
+                containment: "#canvasContent"
+            });
+            $('.draggableHelper').draggable({
+                containment: "#canvasContent"
+            });
+            //http://jqueryui.com/draggable/#events for reading stops and starts and drags
+            //recommend that when sending info via websocket, only send the stops, or else too much info would jam up the channel
+            
+            
+            var canvas = document.getElementById('canvas');
+            var context = canvas.getContext('2d');
+            context.beginPath();
+            context.moveTo(100, 150);
+            context.lineTo(450, 50);
+            context.stroke();
+            
+            ////////////END CANVAS SETUP CODE///////////////////
+            
+            
+            
             $('#hangupButton').click(function(){
                 localStream.stop();
                 isStarted = false;

@@ -27,6 +27,8 @@ http.listen(process.env.PORT ||3000, function(){
 
 /* end handling the page loading */
 
+//list of all the sessions by their id codes
+sessions = [];
 
 /* handling the index server side */
 var indexNSP = io.of("/index");
@@ -37,9 +39,16 @@ indexNSP.on("connection", function(socket){
         socket.emit("getUuid", code);
     });
     
+    socket.on("requestCode", function(){
+        var code =  makeid();
+        socket.emit("getCode", code);
+    });
+    
     //the code that is sent here will determine the new link
     //code should not be a link
     socket.on("createSession", function(code){
+        console.log("creating session");
+        sessions.push(code);
         app.get("/" + code + "/", function(req, res){
             res.sendfile('public/session/index.html');
         });
@@ -48,7 +57,14 @@ indexNSP.on("connection", function(socket){
 /*end handling the index server side */
 
 
-
+function makeid()
+{
+    var text = "";
+    var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+    for( var i=0; i < 15; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return text;
+}
 
 
 

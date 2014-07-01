@@ -6,10 +6,17 @@ $( window ).load(function() {
         alert("code: " + code); 
     });
     
-    var code = makeid();
-    console.log(code.length);
-    var link = document.URL + code + "/";
-    $("#linkInput").val(link);
+    var code;
+    var link;
+    socket.emit("requestCode");
+    socket.on("getCode", function(tcode){
+        code = tcode;
+        link = document.URL + code + "/";
+        $("#linkInput").val(link);
+    });
+    
+    
+    
     
     
     $("#quickSessionButton").click(function(){
