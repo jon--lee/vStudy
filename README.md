@@ -1,3 +1,4 @@
-# Video testing: first application
+# testing: first application
+vStudy
 
-The majority of this code is from [codelab](https://bitbucket.org/webrtc/codelab/overview)
+Stream code courtesy of [codelab](https://bitbucket.org/webrtc/codelab/overview)
