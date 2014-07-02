@@ -1,42 +1,3 @@
-var onSelector = false;
-$('#pencilButton').css('background', '#41cb41');
-$('#pencilDetail').css('background', '#41cb41');
-
-$('#pencilButton').click(function(){
-    if(onSelector) {swap();}
-});
-
-$('#selectorButton').click(function(){
-    if(!onSelector) {swap();}
-});
-
-function swap(){
-    if(onSelector)
-    {
-        $('#pencilButton').css('background', '#41cb41');
-        $('#pencilDetail').css('background', '#41cb41');
-        $('#selectorButton').css('background', '#cbcbcb');
-        $('#canvas').css('z-index', 3000);
-        $('#canvasContent div').css('z-index', 1);
-        $('#canvasContent img').css('border', '1px solid transparent');
-    }
-    else{
-        $('#selectorButton').css('background', '#41cb41');
-        $('#pencilButton').css('background', '#cbcbcb');
-        $('#pencilDetail').css('background', '#cbcbcb');
-        $('#canvas').css('z-index', 1);
-        $('#canvasContent div').css('z-index', 3000);
-        
-        $('#canvasContent img').css('border', '1px solid #cbcbcb');
-    }
-    onSelector = !onSelector;
-}
-
-
-$('#pencilDetail').click(function(){
-    $('#menuItems ul li div').css('visibility', 'visible');
-});
-
 
 
 
@@ -75,7 +36,7 @@ if (room === '') {
 }
 
 //var socket = io.connect();
-var socket = io("/session");
+//var socket = io("/session");
 
 if (room !== '') {
   console.log('Create or join room', room);

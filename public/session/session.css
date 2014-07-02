@@ -1,24 +1,38 @@
+html
+{
+    height:100%;
+}
 body
 {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", helvetica, arial, "Lucida Grande", "sans-serif";
     margin: 0px;
     font-weight:lighter;
+    height:100%;
+    overflow:hidden;
 }
 #container
 {
     min-width: 1100px;
     width: 100%;
-    min-height: 400px;
+    height:100%;
     margin:0px;
+    /* when these need to be used, set them to "default" */
 }
 
 #header
 {
+    z-index: 7000;
     height:50px;
     width:100%;
     /*background:#2885ce; old blue background */
     background: #f1f1f1;
     color: #919191;
+    -webkit-touch-callout: none
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 
@@ -43,13 +57,26 @@ a
 {
     width:100%;
     height:100%;
+    -webkit-touch-callout: none
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 #videos
 {
     float:left;
     position:absolute;
-    height:100%;
+    background:#f1f1f1;
+    z-index:5000;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 video
@@ -57,6 +84,12 @@ video
     background:black;
     width:333px;
     height:250px;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 #spacer
 {
@@ -65,9 +98,11 @@ video
 
 #canvasContent
 {
-    width:900px;
-    height:600px;
-    margin-left:333px;
+    cursor:default;
+    overflow:hidden;
+    display:block;
+    height:2000px;
+    width:2000px;
 }
 
 #canvasContent div
@@ -78,6 +113,12 @@ video
 #canvasContent div img
 {
     border:1px solid transparent;
+    -webkit-touch-callout: none
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 
@@ -85,6 +126,20 @@ video
 {
     position:absolute;
     z-index:3000;
+}
+
+#imageContainer
+{
+    position:absolute;
+    margin-left:333px;
+    height:100%;
+    width:100%;
+    -webkit-touch-callout: none
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 

@@ -33,7 +33,9 @@
                         <li id='selectorButton'>
                             Selector
                         </li>
-                        
+                        <li id='clearButton'>
+                            Clear
+                        </li>
                         <li id='addButton'>
                             +
                         </li>
@@ -52,10 +54,13 @@
                     </div>
                     <div id='canvasContent'>
                         
-                        <canvas id='canvas' width="900" height="600"></canvas>
-                        <div class='draggableHelper' style="display:inline-block">
-                            <img id="image" class="ui-widget-content" style='' src='http://www.google.com.br/images/srpr/logo3w.png' />
+                        <canvas id='canvas'></canvas>
+                        <div id='imageContainer'>
+                            <div class='draggableHelper' style="display:inline-block">
+                                <img class="image" class="ui-widget-content" style='' src='http://www.google.com.br/images/srpr/logo3w.png' />
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
             
@@ -67,27 +72,14 @@
         <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
         <script type='text/javascript' src='../socket.io/socket.io.js'></script>
         <script type='text/javascript' src='../js/lib/adapter.js'></script>
+        <script type='text/javascript' src='../session/socket.js'></script>
+        <script type='text/javascript' src='../session/ui.js'></script>
+        <script type='text/javascript' src='../session/draw.js'></script>
         <script type='text/javascript' src='../session/main.js'></script>
+        
+        
         <script type='text/javascript'>
             /////////////CANVAS SETUP CODE////////////////////
-            $('#image').resizable({
-                containment: "#canvasContent"
-            });
-            $('.draggableHelper').draggable({
-                containment: "#canvasContent"
-            });
-            //http://jqueryui.com/draggable/#events for reading stops and starts and drags
-            //recommend that when sending info via websocket, only send the stops, or else too much info would jam up the channel
-            
-            
-            var canvas = document.getElementById('canvas');
-            var context = canvas.getContext('2d');
-            context.beginPath();
-            context.moveTo(100, 150);
-            context.lineTo(450, 50);
-            context.stroke();
-            
-            ////////////END CANVAS SETUP CODE///////////////////
             
             
             
