@@ -126,8 +126,20 @@ function handleUserMedia(stream) {
   }
 }
 
+//clear the page for use without the video
+//make the image constraints wider
 function handleUserMediaError(error){
   console.log('getUserMedia error: ', error);
+    isChannelReady = false;
+    socket.emit("leaveRoom", room);
+    $('#videos').hide(1000);
+    $('.draggableHelper').draggable({
+        containment: '#canvasContent'                         
+    });
+    $('.image').resizable({
+        containment: "#imageContainer",
+    });
+
 }
 
 var constraints = {video: true, audio: true};

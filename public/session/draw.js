@@ -10,8 +10,9 @@ $('.image').resizable({
         console.log("stopped resizing");    //should send info via websocket now
     }
 });
+
 $('.draggableHelper').draggable({
-    containment: "#imageContainer",
+    containment: '#imageContainer',
     start: function(){
         console.log("Start dragging");
     },
@@ -19,6 +20,9 @@ $('.draggableHelper').draggable({
         console.log("stop dragging");       //should send the info via websocket now
     }                           
 });
+
+
+
 
 
 

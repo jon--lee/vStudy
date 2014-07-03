@@ -24,7 +24,6 @@ app.use(express.static(__dirname + '/public'));
 http.listen(process.env.PORT ||3000, function(){
     //console.log('listening on *:3000');
 });
-
 /* end handling the page loading */
 
 //list of all the sessions by their id codes
@@ -92,12 +91,13 @@ sessionNSP.on('connection', function (socket){
 
 	socket.on('create or join', function (room) {
 		var numClients = getNumClients(room);
+        console.log("CREATE OR JOIN room called, there are: " + getNumClients(room) + " clients in this room");
 
 		log('Room ' + room + ' has ' + numClients + ' client(s)');
 		log('Request to create or join room', room);
-        console.log("there are " + numClients + " in this room");
 		if (numClients == 0){
 			socket.join(room);
+            socket.emit('joined', room);
             roomsClient[socket.id].push(room);
 			socket.emit('created', room);
 		} else if (numClients == 1) {
@@ -105,6 +105,7 @@ sessionNSP.on('connection', function (socket){
 			socket.join(room);
             roomsClient[socket.id].push(room);
 			socket.emit('joined', room);
+            console.log("join room called, there are: " + getNumClients(room) + " clients in this room");
 		} else { // max two clients
 			socket.emit('full', room);
 		}
@@ -115,23 +116,32 @@ sessionNSP.on('connection', function (socket){
     
     socket.on("leaveRoom", function(room){
         socket.leave(room);
-        console.log("broadcasting to room that peer left");
         socket.broadcast.to(room).emit("peerLeft", room);
-        delete roomsClient[socket.id];
+        //delete roomsClient[socket.id];
+        removeFromRoom(room, socket.id);
+        
     });
     
     socket.on("disconnect", function(){
-        for (var i = 0; i < roomsClient[socket.id].length; i++)
-        {
-            room = roomsClient[socket.id][i];
-            socket.leave(room);
-            console.log("broadcasting to room that peer left");
-            socket.broadcast.to(room).emit("peerLeft", room);
+        if(roomsClient[socket.id] != null){
+            for (var i = 0; i < roomsClient[socket.id].length; i++)
+            {
+                room = roomsClient[socket.id][i];
+                socket.leave(room);
+                socket.broadcast.to(room).emit("peerLeft", room);
+                removeFromRoom(room, socket.id);
+            }
+            delete roomsClient[socket.id];
         }
-        delete roomsClient[socket.id];
     });
     
 });
+
+function removeFromRoom(room, socketid)
+{
+    var i = roomsClient[socketid].indexOf(room);
+    if(i>-1){ roomsClient[socketid].splice(i,1); }
+}
 
 
 //the room at key "room" must be defined (this method does not check for that and will throw an error
