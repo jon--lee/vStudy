@@ -40,13 +40,14 @@ indexNSP.on("connection", function(socket){
     
     socket.on("requestCode", function(){
         var code =  makeid();
+        while(sessions.indexOf(code) > -1)
+            code = makeid();
         socket.emit("getCode", code);
     });
     
     //the code that is sent here will determine the new link
     //code should not be a link
     socket.on("createSession", function(code){
-        console.log("creating session");
         sessions.push(code);
         app.get("/" + code + "/", function(req, res){
             res.sendfile('public/session/index.html');
@@ -70,6 +71,9 @@ function makeid()
 var sessionNSP = io.of("/session");
 
 var roomsClient = {};
+sessionsLogs = {};
+sessionsImages = {};
+
 
 //io.sockets.on('connection', function (socket){
 sessionNSP.on('connection', function (socket){
@@ -91,7 +95,6 @@ sessionNSP.on('connection', function (socket){
 
 	socket.on('create or join', function (room) {
 		var numClients = getNumClients(room);
-        console.log("CREATE OR JOIN room called, there are: " + getNumClients(room) + " clients in this room");
 
 		log('Room ' + room + ' has ' + numClients + ' client(s)');
 		log('Request to create or join room', room);
@@ -105,7 +108,6 @@ sessionNSP.on('connection', function (socket){
 			socket.join(room);
             roomsClient[socket.id].push(room);
 			socket.emit('joined', room);
-            console.log("join room called, there are: " + getNumClients(room) + " clients in this room");
 		} else { // max two clients
 			socket.emit('full', room);
 		}

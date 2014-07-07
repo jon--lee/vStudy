@@ -67,20 +67,29 @@ a
 
 #videos
 {
+    top:20px;
+    left:20px;
     float:left;
     position:absolute;
-    background:#f1f1f1;
+    background: rgba(0, 0, 0, .2);
     z-index:5000;
-    
+    padding:25px;
+    border-radius: 3px;
 }
 
 video
 {
     background:black;
-    width:333px;
-    height:250px;
+    width:250px;
+    height:187.5px;
+}
+
+#localVideo
+{
+    cursor:pointer;
     
 }
+
 #spacer
 {
     height:20px;
@@ -114,7 +123,6 @@ video
 #imageContainer
 {
     position:absolute;
-    margin-left:333px;
     height:100%;
     width:auto;
     bottom:0;

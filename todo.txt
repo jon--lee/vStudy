@@ -1,5 +1,12 @@
-create functionality that checks if the link already exists
-get the code from the server not the client side (security risk)
+//create functionality that checks if the link already exists
+//get the code from the server not the client side (security risk)
+when making the size of the canvas, make it so that the client with the larger one is dominant
+when the client changes hte size of the window, update the canvas sizes of both clients
+
+video should have minimize, hang up, mute, pause
+later on add functionality for just audio --- a way to do this would be to hang-up then call again with dif constraints (ie just audio)
+give a popup about the basics of the site. make sure the iphone usage is the most prominant part (with an image)
+make a button for just images --- load image, use webcam use iphone
 
 
 
@@ -15,3 +22,7 @@ also when creating the link for the video chat, the "/" at the end of the link m
 once officially decided, scale down the image for high speed loading
 for now, let js work after dom loads not content
 for deployment replace "$( window ).load(function(){" with "$(document).ready(function(){"
+
+
+
+

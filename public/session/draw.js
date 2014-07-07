@@ -21,6 +21,11 @@ $('.draggableHelper').draggable({
     }                           
 });
 
+$('#videos').draggable({
+    containment: "#content"
+});
+
+
 
 
 
@@ -101,9 +106,11 @@ function mouseDown(evt)
 
 //erase everything on the canvas (including images)
 //must also reset the context stuff
+
 $('#clearButton').click(function(){
     canvas.width = canvas.width;
     resetContext();
+    hideImages();
 });
 
 function resetContext()
@@ -111,6 +118,11 @@ function resetContext()
     context = canvas.getContext('2d');
     context.lineWidth = defaultLineWidth;
     context.lineCap = 'round';
+}
+//images are merely hidden from the view, should inquire whether or not this affects performance to have stagnant "images" still on the page.
+function hideImages()
+{
+    $('#imageContainer div').hide(0);
 }
 
 

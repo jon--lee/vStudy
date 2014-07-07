@@ -1,4 +1,4 @@
-$( window ).load(function() {
+$(document).ready(function(){
     var socket = io("/index");
     
     //only if the link needs to be more secure/longer
