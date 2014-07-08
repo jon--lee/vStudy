@@ -1,7 +1,9 @@
 var onSelector = false;
+var videoOpen = true;
 var selectedColor = '#45b745'
 select($('#pencilButton'));
 select($('#pencilDetail'));
+select($('#videoButton'));
 
 $('#pencilButton').click(function(){
     if(onSelector) {swap();}
@@ -89,6 +91,9 @@ $('#addButton').mouseout(function(){
 
 
 
+
+
+
 function select(obj)
 {
     obj.css('background', selectedColor);
@@ -98,3 +103,11 @@ function deselect(obj)
 {
     obj.css('background', 'transparent');
 }
+
+
+//minimize the video by hiding it and showing the "open video" button
+$('#minimizeButton').click(function(){
+    
+});
+
+

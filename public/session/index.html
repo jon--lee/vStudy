@@ -20,6 +20,9 @@
             <div id='header'>
                 <div id='menuItems'>
                     <ul id='menuItems'>
+                        <li id='videoButton'>
+                            Video
+                        </li>
                         <li id='pencilButton' style='margin-right:2px;'>
                             Pencil
                             
@@ -48,6 +51,10 @@
             </div>
                 <div id='content'>
                     <div id='videos'>
+                        <div id='options'>
+                            <span style='float:right' id='minimizeButton'>-</span><span style='float:left' id='closeButton'>x</span>
+                        </div>
+                        <br>
                         <video id='localVideo' autoplay muted></video>
                         <div id='spacer'>asdf</div>
                         <video id='remoteVideo' autoplay></video>
@@ -82,7 +89,7 @@
             /////////////CANVAS SETUP CODE////////////////////
             
             
-            
+            /*
             $('#hangupButton').click(function(){
                 localStream.stop();
                 isStarted = false;
@@ -91,7 +98,7 @@
                 //first must check if both sockets are connected but for now this is testing to see
                 //if it can reestablish a connection after closing the peer connection
                 getUserMedia(constraints, handleUserMedia, handleUserMediaError);
-            });
+            });*/
         </script>
 
     </body>

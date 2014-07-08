@@ -48,6 +48,7 @@ socket.on('created', function (room){
   isInitiator = true;
 });
 
+//deconstruct the page and warn that it is full
 socket.on('full', function (room){
   //console.log('Room ' + room + ' is full');
 });
@@ -118,7 +119,8 @@ var remoteVideo = document.querySelector('#remoteVideo');
 
 function handleUserMedia(stream) {
   //console.log('Adding local stream.');
-  localVideo.src = window.URL.createObjectURL(stream);
+  //localVideo.src = window.URL.createObjectURL(stream);
+    attachMediaStream(localVideo, stream);
   localStream = stream;
   sendMessage('got user media');
   if (isInitiator) {
@@ -132,7 +134,7 @@ function handleUserMediaError(error){
   //console.log('getUserMedia error: ', error);
     isChannelReady = false;
     socket.emit("leaveRoom", room);
-    $('#videos').hide(1000);
+    deselectVideo();
     $('.draggableHelper').draggable({
         containment: '#canvasContent'                         
     });
@@ -256,7 +258,8 @@ function requestTurn(turn_url) {
 
 function handleRemoteStreamAdded(event) {
   //console.log('Remote stream added.');
-  remoteVideo.src = window.URL.createObjectURL(event.stream);
+    attachMediaStream(remoteVideo, event.stream);
+  //remoteVideo.src = window.URL.createObjectURL(event.stream);
   remoteStream = event.stream;
 }
 
@@ -361,7 +364,8 @@ function removeCN(sdpLines, mLineIndex) {
   return sdpLines;
 }
 
-
+//function used to pause the video when the user clicks on it
+//should also pause the remote video
 $('#localVideo').click(function(){
     if(isStarted){
         if($(this).get(0).paused)
@@ -373,5 +377,49 @@ $('#localVideo').click(function(){
         }
     }
 });
+
+//minimize the video by hiding it and showing the "open video" button
+$('#minimizeButton').click(function(){
+    deselectVideo();
+});
+
+//minimize the video by hiding it and showing the "open video" button
+$('#closeButton').click(function(){
+    deselectVideo();
+    if(localStream != null){ localStream.stop(); }
+    isStarted = false;
+});
+
+$('#videoButton').mouseover(function(){
+    select($(this));
+});
+
+$('#videoButton').mouseout(function(){
+    if(videoOpen == false)
+    {
+        deselect($(this));
+    }
+});
+
+$('#videoButton').click(function(){
+    if(videoOpen == false)
+    {
+        select($(this));
+        videoOpen = true;
+        $('#videos').show("slow");
+        if(!isStarted)
+        {
+            getUserMedia(constraints, handleUserMedia, handleUserMediaError);
+        }
+    }
+});
+
+
+function deselectVideo()
+{
+    $('#videos').hide(300);
+    videoOpen = false;
+    deselect($('#videoButton'))
+}
 
 

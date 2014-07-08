@@ -69,12 +69,34 @@ a
 {
     top:20px;
     left:20px;
-    float:left;
     position:absolute;
-    background: rgba(0, 0, 0, .2);
+    background: rgba(40, 40, 40, .2);
     z-index:5000;
-    padding:25px;
+    padding-right:25px;
+    padding-left:25px;
+    padding-bottom:25px;
     border-radius: 3px;
+    padding-top:5px;
+    cursor: url('../session/media/openhand.cur'), pointer;
+}
+
+#videos #options
+{
+    width:50px;
+    height:10px;
+}
+
+#videos #options span
+{
+    background:rgba(10, 10, 10, .3);
+    color:#FFF;
+    height:22px;
+    width:22px;
+    cursor:pointer;
+    border-radius:11px;
+    text-align: center;
+    vertical-align: middle;
+    display:block;
 }
 
 video
@@ -82,7 +104,10 @@ video
     background:black;
     width:250px;
     height:187.5px;
+    cursor:default;
 }
+
+
 
 #localVideo
 {
@@ -110,7 +135,7 @@ video
 #canvasContent div img
 {
     border:1px solid transparent;
-    
+    cursor: url('../session/media/openhand.cur'), pointer;
 }
 
 

@@ -22,7 +22,8 @@ $('.draggableHelper').draggable({
 });
 
 $('#videos').draggable({
-    containment: "#content"
+    containment: "#content",
+    cancel: "video, #options"
 });
 
 

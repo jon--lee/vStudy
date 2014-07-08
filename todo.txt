@@ -6,6 +6,12 @@ when the client changes hte size of the window, update the canvas sizes of both 
 video should have minimize, hang up, mute, pause
 later on add functionality for just audio --- a way to do this would be to hang-up then call again with dif constraints (ie just audio)
 give a popup about the basics of the site. make sure the iphone usage is the most prominant part (with an image)
+1. share the link (add text box with copy-to-clipboard button)
+2. allow video (add picture)
+3. Draw with an iOS device (add picture)
+add "Got it!" button at the bottom
+
+
 make a button for just images --- load image, use webcam use iphone
 
 
@@ -24,5 +30,32 @@ for now, let js work after dom loads not content
 for deployment replace "$( window ).load(function(){" with "$(document).ready(function(){"
 
 
+
+
+
+
+
+
+Things to do:
+//- make the cursor for all draggable things (open hand and close hand)
+- make the buttons for video option (rest can be done on photoshop for icons)
+        - crossed out microphone
+        - x-out button
+        - minimize button
+- make an "open video" div and button so that when its closed, you can open it again
+    - if the streaming is not happenign, this will call getUserMedia
+- make chat box
+    - make open button div (closed on document load)
+    - opens chat at bottom of page
+    - 
+- make video buttons better looking (responsive to clicks)
+- if the user has denied user media, and then clicks the video button, make a drop down that asks the user to configure their settings as simply refreshing does not work
+
+
+
+
+//LONG TERM
+
+allow multiple users to join the chat
 
 
