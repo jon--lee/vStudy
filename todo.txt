@@ -54,9 +54,15 @@ Things to do:
 - if the user has denied user media, and then clicks the video button, make a drop down that asks the user to configure their settings as simply refreshing does not work
 
 - make it so that when a user joins but the room is full, it deconstructs.
-- overlay paused video with a dark transparency
+//- overlay paused video with a dark transparency
 
-//LONG TERM
+- make strict variable definitions for the line type and width for drawing to be passed to peer
+
+
+
+
+
+************LONG TERM******************
 
 allow multiple users to join the chat
 

@@ -71,8 +71,8 @@ function makeid()
 var sessionNSP = io.of("/session");
 
 var roomsClient = {};
-sessionsLogs = {};
-sessionsImages = {};
+var sessionsLogs = {};
+var sessionsImages = {};
 
 
 //io.sockets.on('connection', function (socket){
@@ -147,6 +147,10 @@ sessionNSP.on('connection', function (socket){
     socket.on("playRemote", function(room){
         console.log("telling the remote to play from the server!");
         socket.broadcast.to(room).emit("playRemote");
+    });
+    
+    socket.on("sendPaint", function(room, drawingJSON){
+        socket.broadcast.to(room).emit("sendPaint", drawingJSON);
     });
     
 });

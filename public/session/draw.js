@@ -1,4 +1,5 @@
-var defaultLineWidth = 4;
+var lineWidth = 4;          //default value
+var lineColor = '#00000'    //default value
 
 //makes it so that all images are resizable
 $('.image').resizable({
@@ -25,8 +26,6 @@ $('#videos').draggable({
     containment: "#content",
     cancel: "video, #options, .videoOverlay"
 });
-
-
 
 
 
@@ -63,8 +62,6 @@ canvas.height = canvasContent.height();
 
 var context;
 resetContext();
-context.lineWidth = defaultLineWidth;
-context.lineCap = 'round';
 /*context.beginPath();
 context.moveTo(100, 150);
 context.lineTo(450, 50);
@@ -72,7 +69,21 @@ context.lineWidth = defaultLineWidth;
 context.lineCap = 'round';
 context.stroke();*/
 
+socket.on('sendPaint', function (drawingJSON){
+    var drawing = JSON.parse(drawingJSON);
+    context.lineWidth = drawing["lineWidth"];
+    context.strokeStyle = drawing["lineColor"];
+    context.beginPath();
+    context.moveTo(drawing["startCoords"].x, drawing["startCoords"].y);
+    context.lineTo(drawing["endCoords"].x, drawing["endCoords"].y);
+    context.stroke();
+    //now reset the styles for this peer
+    context.lineWidth = lineWidth;
+    context.strokeStyle = lineColor;
+});
+
 //MUST BE OFF THE SELECTOR TO DO ANY OF THESE FUNCTIONS
+
 canvas.addEventListener('mousemove', mouseMove);
 
 canvas.addEventListener('mouseup', mouseUp);
@@ -89,6 +100,15 @@ function mouseMove(evt)
         context.moveTo(coords.x, coords.y);
         context.lineTo(newCoords.x, newCoords.y);
         context.stroke();
+        //send information to the peer
+        var drawing = {
+            "startCoords": coords,
+            "endCoords": newCoords,
+            "lineWidth": lineWidth,
+            "lineColor": lineColor
+        };
+        drawingJSON = JSON.stringify(drawing);
+        socket.emit("sendPaint", room, drawingJSON);
         coords = newCoords;
     }
 }
@@ -101,7 +121,6 @@ function mouseDown(evt)
 {
     isDown = true;
     coords = getMousePos(canvas, evt)
-    console.log("new coords are: " + coords.x + ", " + coords.y);
 }
 
 
@@ -117,7 +136,8 @@ $('#clearButton').click(function(){
 function resetContext()
 {
     context = canvas.getContext('2d');
-    context.lineWidth = defaultLineWidth;
+    context.lineWidth = lineWidth;
+    context.strokeStyle = lineColor;
     context.lineCap = 'round';
 }
 //images are merely hidden from the view, should inquire whether or not this affects performance to have stagnant "images" still on the page.
