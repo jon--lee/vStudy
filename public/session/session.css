@@ -107,7 +107,22 @@ video
     cursor:default;
 }
 
+.videoOverlay
+{
+    visibility:hidden;
+    background:black;
+    opacity:.50;
+    width:250px;
+    height:187.5px;
+    float:left;
+    z-index:8000;
+    position:absolute;
+}
 
+#localVideoOverlay
+{
+    cursor:pointer;
+}
 
 #localVideo
 {

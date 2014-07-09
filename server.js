@@ -136,6 +136,18 @@ sessionNSP.on('connection', function (socket){
             delete roomsClient[socket.id];
         }
     });
+    socket.on("playRemote", function(room){
+        socket.broadcast.to(room).emit("playRemote");
+    });
+    
+    socket.on("pauseRemote", function(room){
+        console.log("telling remote to pause from the server!");
+        socket.broadcast.to(room).emit("pauseRemote");
+    });
+    socket.on("playRemote", function(room){
+        console.log("telling the remote to play from the server!");
+        socket.broadcast.to(room).emit("playRemote");
+    });
     
 });
 

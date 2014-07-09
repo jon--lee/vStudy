@@ -40,10 +40,12 @@ Things to do:
 //- make the cursor for all draggable things (open hand and close hand)
 - make the buttons for video option (rest can be done on photoshop for icons)
         - crossed out microphone
-        - x-out button
-        - minimize button
-- make an "open video" div and button so that when its closed, you can open it again
-    - if the streaming is not happenign, this will call getUserMedia
+    //    - x-out button
+    //    - minimize button
+//- make an "open video" div and button so that when its closed, you can open it again
+  //  - if the streaming is not happenign, this will call getUserMedia
+- make the changes occur for the remote user as well
+
 - make chat box
     - make open button div (closed on document load)
     - opens chat at bottom of page
@@ -51,8 +53,8 @@ Things to do:
 - make video buttons better looking (responsive to clicks)
 - if the user has denied user media, and then clicks the video button, make a drop down that asks the user to configure their settings as simply refreshing does not work
 
-
-
+- make it so that when a user joins but the room is full, it deconstructs.
+- overlay paused video with a dark transparency
 
 //LONG TERM
 

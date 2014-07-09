@@ -257,10 +257,13 @@ function requestTurn(turn_url) {
 }
 
 function handleRemoteStreamAdded(event) {
-  //console.log('Remote stream added.');
+    //console.log('Remote stream added.');
     attachMediaStream(remoteVideo, event.stream);
   //remoteVideo.src = window.URL.createObjectURL(event.stream);
   remoteStream = event.stream;
+    play($('#localVideo'), $('#localVideoOverlay'))
+    /////////////MAKE THE LOCAL VIDEO START PLAYING AS SOON AS THE REMOTE VIDEO IS ADDED///////////////////
+    
 }
 
 function handleRemoteStreamRemoved(event) {
@@ -364,19 +367,47 @@ function removeCN(sdpLines, mLineIndex) {
   return sdpLines;
 }
 
-//function used to pause the video when the user clicks on it
-//should also pause the remote video
-$('#localVideo').click(function(){
-    if(isStarted){
-        if($(this).get(0).paused)
-        {
-            $(this).get(0).play();
-        }
-        else{
-            $(this).get(0).pause();
+$('#localVideo').click(localClicked);
+$('#localVideoOverlay').click(localClicked);
+
+
+
+function localClicked(){
+    var locVid = $('#localVideo');
+    if(locVid.get(0).paused)
+    {
+        if(isStarted){ 
+            play(locVid, $('#localVideoOverlay')); 
+            console.log("telling the remote user to play!");
+            socket.emit("playRemote", room);
         }
     }
+    else
+    {
+        pause(locVid, $('#localVideoOverlay'));
+        console.log("telling the remote user to pause");
+        socket.emit("pauseRemote", room);
+    }
+}
+
+socket.on("pauseRemote", function (room){
+    pause($('#remoteVideo'), $('#remoteVideoOverlay'));
 });
+socket.on("playRemote", function(room){
+    play($('#remoteVideo'), $('#remoteVideoOverlay'));
+});
+
+function play(vid, overlay)
+{
+    vid.get(0).play();
+    overlay.css('visibility', 'hidden');
+}
+
+function pause(vid, overlay)
+{
+    vid.get(0).pause();
+    overlay.css('visibility', 'visible');
+}
 
 //minimize the video by hiding it and showing the "open video" button
 $('#minimizeButton').click(function(){
