@@ -1,3 +1,16 @@
+var cookie = readCookie("sessioncode");
+if(cookie != null)
+{
+    console.log("value: " + cookie);
+    $("#signup").css("display", "none");
+    $("#restore").css("display", "block");
+    $("#signUpSection").css("height", "350px");
+}
+else
+{
+    createCookie("sessioncode", "lol");
+}
+
 $(document).ready(function(){
     var socket = io("/index");
     
@@ -5,6 +18,10 @@ $(document).ready(function(){
     socket.on("getUuid", function(code){
         alert("code: " + code); 
     });
+    
+    
+    
+    
     
     var code;
     var link;
@@ -14,9 +31,12 @@ $(document).ready(function(){
         link = document.URL + code + "/";
         $("#linkInput").val(link);
     });
-    
-    
-    
+    var restoreLink;
+    if(cookie != null)
+    {
+        restoreLink = document.URL + cookie + "/";
+        $("#restoreLinkInput").val(restoreLink);
+    }
     
     
     $("#quickSessionButton").click(function(){
@@ -26,6 +46,17 @@ $(document).ready(function(){
             window.location = link;
         }
     });
+    $("#restoreSessionButton").click(function(){
+        if($("#restoreLinkInput").val() != "")
+        {
+            window.location = restoreLink;
+        }
+    });
+    
+    
+    
+    
+    
     
     function makeid()
     {

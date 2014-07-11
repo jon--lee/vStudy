@@ -28,27 +28,38 @@
             </div>
             <div id='content'>
                 <div id='signUpSection'>
-                    <center>
-                        <span style='font-size:30px;'>Studying made simple</span>
-                        <br>
-                        <input style='margin-top:5px;' id='linkInput' type='text' readonly>
-                        <button class='submitButton' id='quickSessionButton'>Start a quick session</button>
-                    </center>    
+                    <div>
+                        <center>
+                            <span style='font-size:30px;'>Studying made simple</span>
+                            <br>
+                            <input style='margin-top:5px;' id='linkInput' type='text' readonly>
+                            <button class='submitButton' id='quickSessionButton'>Start a quick session</button>
+                        </center>
+                    </div>
                     <br>
                     <div style="height: 1px; background-color: black; text-align: center">
                         <span style="font-style:italic;padding-left:40px;padding-right:40px;background-color: #F1F1F1; position: relative; top: -0.5em;font-weight:normal;">
                             or
                         </span>
-                    </div> 
+                    </div>
                     <br>
-                    <center>
-                        <span style='margin-left: 40px;font-size:30px;'>Sign up <span style='color:#919191;font-size:20px'>to save your work</span></span>
-                        <form action='/signup/' method='POST' target="_self">
-                                <input name='email' type='text' placeholder='Email' />
-                                <input name='password' type='password' placeholder='Password' />
-                                <button onclick="submit" class='submitButton'>Sign up</button>
-                        </form>
-                    </center>
+                    <div id='signup'>
+                        <center>
+                            <span style='margin-left: 40px;font-size:30px;'>Sign up <span style='color:#919191;font-size:20px'>to save your work</span></span>
+                            <form action='/signup/' method='POST' target="_self">
+                                    <input name='email' type='text' placeholder='Email' />
+                                    <input name='password' type='password' placeholder='Password' />
+                                    <button onclick="submit" class='submitButton'>Sign up</button>
+                            </form>
+                        </center>
+                    </div>
+                    <div id='restore'>
+                        <center>
+                            <input style='margin-top:5px;' id='restoreLinkInput' type='text' readonly>
+                            <button class='submitButton' id='restoreSessionButton'>Restore your last one</button>
+                            <p><a href='signup' target="_self">Sign up</a> <span style='color:#919191'>to save all your work</span></span></p>
+                        </center>
+                    </div>
                 </div>
             </div>
             
@@ -67,10 +78,12 @@
 		</div>
         </div>
 
-    <script src='../js/jquery.js'></script>
-    <script type='text/javascript' src='../socket.io/socket.io.js'></script>
-    <script src='../index/index.js'></script>
-
+        
+        <script src='../js/jquery.js'></script>
+        <script type='text/javascript' src='../socket.io/socket.io.js'></script>
+        <script src='../js/cookies.js'></script>
+        <script src='../index/index.js'></script>
+        
     </body>
 
 </html>

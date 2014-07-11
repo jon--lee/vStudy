@@ -56,10 +56,14 @@ Things to do:
 - make it so that when a user joins but the room is full, it deconstructs.
 //- overlay paused video with a dark transparency
 
-- make strict variable definitions for the line type and width for drawing to be passed to peer
+//- make strict variable definitions for the line type and width for drawing to be passed to peer
 
 
-
+*******************COOKIES*****************
+- instead of sign up box, make "restore last session box" with a sign  up option underneath it
+- if no cookie is found on index, display the sign up box not the restore
+- if there is a session listed in the cookies, don't display the instructions pop up
+- only add the cookie after the pop up appears (so that it doesn't mistake a new user for an old one)
 
 
 ************LONG TERM******************
