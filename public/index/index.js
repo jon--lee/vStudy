@@ -1,4 +1,4 @@
-var cookie = readCookie("sessioncode");
+var cookie = readCookie("sc"); //cookies name for session id should always be "sc" //
 if(cookie != null)
 {
     console.log("value: " + cookie);
