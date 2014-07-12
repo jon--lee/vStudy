@@ -15,6 +15,36 @@
     </head>
 
     <body>
+        <div class='popup' id='instructionPopup'>
+            <div id='popupBanner'>
+                <h3>voice. video. visual.</h3>
+            </div>
+            <div id='popupContent'>
+                <ul>
+                    <li>
+                        <img src=''>
+                        <div>
+                            <span>Invite</span> others by copying and sharing the link.
+                            <br>
+                            <input type='text' value='' disabled><button id='copyButton' data-clipboard-text="Hi!">Copy</button>
+                        </div>
+                    </li>
+                    <li>
+                        <img src=''>
+                        <div>
+                            <span>Talk</span> face-to-face by allowing video and audio.
+                            <br>
+                            Having trouble?
+                        </div>
+                    </li>
+                    <li>
+                        <img src=''>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class='popup' id='instructionOverlay'></div>
+        
         
         <div id='container'>
             <div id='header'>
@@ -82,6 +112,7 @@
         
         <script type='text/javascript' src='../js/jquery.js'></script>
         <script src="//code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+        <script type='text/javascript' src='../js/ZeroClipboard.js'></script>
         <script type='text/javascript' src='../socket.io/socket.io.js'></script>
         <script type='text/javascript' src='../js/lib/adapter.js'></script>
         <script type='text/javascript' src='../js/cookies.js'></script>

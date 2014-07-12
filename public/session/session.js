@@ -1,4 +1,5 @@
 var cookie = readCookie("sc");
+showPopup();                        //THIS IS HERE FOR TESTING AND SHOULD BE PUT IN THE IF(COOKIE==NULL) SECTION FOR PRODUCTION
 if(cookie == null)
 {
     //display the popup
@@ -11,3 +12,18 @@ else
 //regardless of what is happening, reset the cookie (because old use may be going to new session
 var code = location.pathname.substring(1, location.pathname.length - 1);
 createCookie("sc", code);
+
+
+function showPopup(){
+    $('.popup').fadeIn();
+    $('#popupContent input').val(document.URL);
+    $("#copyButton").attr("data-clipboard-text", document.URL);
+    $('#popupContent input').select();
+    var clip = new ZeroClipboard($("#copyButton"));
+}
+
+function hidePopup(){
+    $('.popup').fadeOut();
+}
+
+

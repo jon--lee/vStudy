@@ -13,6 +13,119 @@ body
     font-weight:lighter;
     height:100%;
 }
+
+.popup
+{
+    display:none;
+}
+
+
+#instructionOverlay
+{
+    position:fixed;
+    top:0px;
+    left:0px;
+    height:100%;
+    width:100%;
+    background:#000;
+    opacity:.80;
+    z-index:10000;
+}
+
+#instructionPopup
+{
+    position:fixed;
+    top:75px;
+    left:50%;
+    margin-left: -300px;
+    z-index:10001;
+    height:400px;
+    width:600px;
+}
+
+#popupBanner
+{
+    position:absolute;
+    margin-top:0px;
+    width:100%;
+    height:60px;
+    background:#FFF;
+}
+
+#popupBanner h3
+{
+    margin: 18px 20px;
+    font-weight:normal;
+    color: #919191;
+}
+
+
+#popupContent
+{
+    padding-top:20px;
+    width:100%;
+    height:100%;
+    background:#F1F1F1;
+}
+#popupContent ul
+{
+    margin-top: 60px;
+    list-style:none;
+}
+
+#popupContent ul li
+{
+    margin-left:10px;
+    list-style:none;
+    height:100px;
+}
+
+#popupContent ul li img
+{
+    float:left;
+    background:blue;
+    height:80px;
+    width:80px;
+    margin-right:20px;
+}
+
+#popupContent input {
+    outline:none;
+    margin-top:6px;
+    height:45px;
+    width: 300px;
+    border:0px;
+    padding-left:10px;
+    padding-right:10px;
+    font-size:14px;
+}
+
+#popupContent button {
+    outline:none;
+    background:#41cb41;
+    border:0px;
+    border-bottom: 2px solid #41cb41; 
+    border-top-right-radius:3px;
+    border-bottom-right-radius:3px;
+    color:white;
+    height:47px;
+    width:60px;
+    padding:1px 1px;
+    font-size:20px;
+    font-weight:normal;
+    cursor:pointer;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", helvetica, arial, "Lucida Grande", "sans-serif";
+}
+
+#popupContent button:active
+{
+    background:#3eb93e;
+    border-bottom: 2px solid #3eb93e;
+}
+
+#popupContent ul li div
+{
+}
 #container
 {
     min-width: 1100px;
