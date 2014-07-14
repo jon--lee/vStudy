@@ -69,5 +69,5 @@ Things to do:
 ************LONG TERM******************
 
 allow multiple users to join the chat
-
+MAY NEED TO FALL BACK TO SOCKET.IO <1.0 FOR SUPPORT IN OBJECTIVE-C, ALSO CHECK FOR PRODUCTION BECAUSE THERE IS NO PORT FOR REAL DOMAIN
 
