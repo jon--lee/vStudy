@@ -17,7 +17,7 @@
     <body>
         <div class='popup' id='instructionPopup'>
             <div id='popupBanner'>
-                <h3>voice. video. visual.</h3>
+                <h2>Voice. Video. Visual.</h2>
             </div>
             <div id='popupContent'>
                 <ul>
@@ -26,7 +26,7 @@
                         <div>
                             <span>Invite</span> others by copying and sharing the link.
                             <br>
-                            <input type='text' value='' disabled><button id='copyButton' data-clipboard-text="Hi!">Copy</button>
+                            <input type='text' value='' disabled><button id='copyButton' data-clipboard-text="error">Copy</button>
                         </div>
                     </li>
                     <li>
@@ -37,10 +37,16 @@
                             Having trouble?
                         </div>
                     </li>
-                    <li>
+                    <li style='height:85px'>
                         <img src=''>
+                        <div>
+                            <span>Draw</span> right from your mobile device to your computer by downloading the app.
+                        </div>
                     </li>
                 </ul>
+                <center><button id='closePopupButton'>
+                    Got it! Let's go!
+                </button></center>
             </div>
         </div>
         <div class='popup' id='instructionOverlay'></div>

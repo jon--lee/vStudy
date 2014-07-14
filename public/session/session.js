@@ -22,6 +22,10 @@ function showPopup(){
     var clip = new ZeroClipboard($("#copyButton"));
 }
 
+$('#instructionOverlay, #closePopupButton').click(function(){
+   hidePopup(); 
+});
+
 function hidePopup(){
     $('.popup').fadeOut();
 }

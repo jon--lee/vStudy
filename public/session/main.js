@@ -15,7 +15,8 @@ var localStream;
 var pc;
 var remoteStream;
 var turnReady;
-
+var gettingUserMedia;
+var constraints = {video: true, audio: true};
 var pc_config = {'iceServers': [{'url': 'stun:stun.l.google.com:19302'}]};
 
 var pc_constraints = {'optional': [{'DtlsSrtpKeyAgreement': true}]};
@@ -123,6 +124,7 @@ function handleUserMedia(stream) {
     attachMediaStream(localVideo, stream);
   localStream = stream;
   sendMessage('got user media');
+    gettingUserMedia = false;
   if (isInitiator) {
     maybeStart();
   }
@@ -133,6 +135,7 @@ function handleUserMedia(stream) {
 function handleUserMediaError(error){
   //console.log('getUserMedia error: ', error);
     isChannelReady = false;
+    gettingUserMedia = false;
     socket.emit("leaveRoom", room);
     deselectVideo();
     $('.draggableHelper').draggable({
@@ -144,8 +147,11 @@ function handleUserMediaError(error){
 
 }
 
-var constraints = {video: true, audio: true};
-getUserMedia(constraints, handleUserMedia, handleUserMediaError);
+//var constraints = {video: true, audio: true};
+if(!gettingUserMedia){
+    getUserMedia(constraints, handleUserMedia, handleUserMediaError);
+    gettingUserMedia = true;
+}
 
 //console.log('Getting user media with constraints', constraints);
 
@@ -438,9 +444,10 @@ $('#videoButton').click(function(){
         select($(this));
         videoOpen = true;
         $('#videos').show("slow");
-        if(!isStarted)
+        if(!isStarted && !gettingUserMedia)
         {
             getUserMedia(constraints, handleUserMedia, handleUserMediaError);
+            gettingUserMedia = true;
         }
     }
 });
@@ -450,7 +457,7 @@ function deselectVideo()
 {
     $('#videos').hide(300);
     videoOpen = false;
-    deselect($('#videoButton'))
+    deselect($('#videoButton'));
 }
 
 
