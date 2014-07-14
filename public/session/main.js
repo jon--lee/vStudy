@@ -6,7 +6,7 @@
 ///////////ALL VIDEO AND SOCKET STUFF STARTS HERE//////////////////
 
 
-'use strict';
+//'use strict';
 
 var isChannelReady;
 var isInitiator = false;
@@ -15,7 +15,8 @@ var localStream;
 var pc;
 var remoteStream;
 var turnReady;
-var gettingUserMedia;
+var gettingUserMedia = false;
+//var gotThisUserMedia = false;
 var constraints = {video: true, audio: true};
 var pc_config = {'iceServers': [{'url': 'stun:stun.l.google.com:19302'}]};
 
@@ -125,6 +126,7 @@ function handleUserMedia(stream) {
   localStream = stream;
   sendMessage('got user media');
     gettingUserMedia = false;
+    gotThisUserMedia = true;
   if (isInitiator) {
     maybeStart();
   }
@@ -136,6 +138,7 @@ function handleUserMediaError(error){
   //console.log('getUserMedia error: ', error);
     isChannelReady = false;
     gettingUserMedia = false;
+    gotThisUserMedia = false;
     socket.emit("leaveRoom", room);
     deselectVideo();
     $('.draggableHelper').draggable({
@@ -425,6 +428,7 @@ $('#closeButton').click(function(){
     deselectVideo();
     if(localStream != null){ localStream.stop(); }
     isStarted = false;
+    gotThisUserMedia = false;
 });
 
 $('#videoButton').mouseover(function(){

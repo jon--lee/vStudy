@@ -1,5 +1,8 @@
+
+var gotThisUserMedia = false;
 var cookie = readCookie("sc");
-showPopup();                        //THIS IS HERE FOR TESTING AND SHOULD BE PUT IN THE IF(COOKIE==NULL) SECTION FOR PRODUCTION
+showPopup($(".instruction"));                        //THIS IS HERE FOR TESTING AND SHOULD BE PUT IN THE IF(COOKIE==NULL) SECTION FOR PRODUCTION
+configureInstructions();
 if(cookie == null)
 {
     //display the popup
@@ -14,8 +17,12 @@ var code = location.pathname.substring(1, location.pathname.length - 1);
 createCookie("sc", code);
 
 
-function showPopup(){
-    $('.popup').fadeIn();
+function showPopup(obj){
+    obj.fadeIn();
+}
+
+function configureInstructions(){
+    
     $('#popupContent input').val(document.URL);
     $("#copyButton").attr("data-clipboard-text", document.URL);
     $('#popupContent input').select();

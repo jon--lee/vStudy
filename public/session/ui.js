@@ -50,15 +50,13 @@ $('#selectorButton').mouseout(function(){
 
 //////////////////////END TESTING ///////////////////////
 
-
 function swap(){
     if(onSelector)
     {
         select($('#pencilButton'));
         select($('#pencilDetail'));
         deselect($('#selectorButton'));
-        $('#canvas').css('z-index', 3000);
-        $('#canvasContent div').css('z-index', 1);              //converts all divs in canvas content to the back
+        $('#canvas').css('z-index', 7999);
         $('#canvasContent img').css('border', '1px solid transparent');
     }
     else{
@@ -66,7 +64,6 @@ function swap(){
         deselect($('#pencilButton'));
         deselect($('#pencilDetail'));
         $('#canvas').css('z-index', 1);
-        $('#canvasContent div').css('z-index', 3000);               //converts all the divs in canvas content to the front
         
         $('#canvasContent img').css('border', '1px solid #cbcbcb');
     }

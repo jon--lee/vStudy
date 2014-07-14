@@ -2,13 +2,18 @@ var lineWidth = 4;          //default value
 var lineColor = '#00000'    //default value
 
 //makes it so that all images are resizable
+var maxSelectorIndex = 200;
 $('.image').resizable({
     containment: "#imageContainer",
     start: function(event, ui){
         console.log("started resizing");
+        //set the z-index to really high because it should now be the fore-front
+        maxSelectorIndex++;
+        $(this).parent().css("z-index", maxSelectorIndex.toString());
     },
     stop: function(event, ui){
         console.log("stopped resizing");    //should send info via websocket now
+        //set the z-index to parent because its fine now
     }
 });
 
@@ -16,6 +21,8 @@ $('.draggableHelper').draggable({
     containment: '#imageContainer',
     start: function(){
         console.log("Start dragging");
+        maxSelectorIndex++;
+        $(this).css("z-index", maxSelectorIndex.toString());
     },
     stop: function(){
         console.log("stop dragging");       //should send the info via websocket now
