@@ -22,7 +22,7 @@ app.get('/testing/', function(req, res){
 app.use(express.static(__dirname + '/public'));
 
 http.listen(process.env.PORT ||3000, function(){
-    console.log('listening on ' + process.env.PORT);
+    console.log('hey, listening on ' + process.env.PORT);
 });
 /* end handling the page loading */
 

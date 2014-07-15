@@ -1,20 +1,23 @@
+$( document ).ready(function() {
+    var gotThisUserMedia = false;
+    var cookie = readCookie("sc");
+                            //THIS IS HERE FOR TESTING AND SHOULD BE PUT IN THE IF(COOKIE==NULL) SECTION FOR PRODUCTION
+    if(cookie == null)
+    {
+        //display the popup
+        showPopup($(".instruction"));
+        configureInstructions();
+    }
+    else
+    {
+        $("#mobilePopup").slideDown(800);
+    }
 
-var gotThisUserMedia = false;
-var cookie = readCookie("sc");
-showPopup($(".instruction"));                        //THIS IS HERE FOR TESTING AND SHOULD BE PUT IN THE IF(COOKIE==NULL) SECTION FOR PRODUCTION
-configureInstructions();
-if(cookie == null)
-{
-    //display the popup
-    console.log("the pop up menu is being displayed! jk there's nothing cuz i'm lazy");
-}
-else
-{
-    console.log("this user has already used this site! don't do anything!");
-}
-//regardless of what is happening, reset the cookie (because old use may be going to new session
-var code = location.pathname.substring(1, location.pathname.length - 1);
-createCookie("sc", code);
+    //regardless of what is happening, reset the cookie (because old use may be going to new session
+    var code = location.pathname.substring(1, location.pathname.length - 1);
+    createCookie("sc", code);
+});
+
 
 
 function showPopup(obj){
@@ -30,7 +33,8 @@ function configureInstructions(){
 }
 
 $('#instructionOverlay, #closePopupButton').click(function(){
-   hidePopup(); 
+    hidePopup(); 
+    $("#mobilePopup").slideDown();
 });
 
 function hidePopup(){
@@ -38,3 +42,24 @@ function hidePopup(){
 }
 
 
+
+$('#mobilePopup').mouseenter(function(){
+    $(this).animate({backgroundColor: "#fff" });
+}).mouseleave(function(){
+    $(this).css('background', "#ebebeb" );
+    $(this).css('border', '0px');
+}).mousedown(function(){
+    $(this).css('border-top', '1px solid transparent');
+}).mouseup(function(){
+    $(this).css('background', '#fff');
+    $(this).css('border', '0px');
+}).click(function(e){
+    if(!$(e.target).is('#mobilePopup button')){
+        window.open("https://google.com", '_blank');        //send user away and then close this pop up
+        hidePopup();
+    }
+});
+
+$('#mobilePopup button').click(function(){
+    hidePopup();
+});

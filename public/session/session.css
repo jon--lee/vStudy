@@ -17,7 +17,60 @@ body
 .popup
 {
     display:none;
-    z-index:10001;
+    z-index:10001
+}
+
+#mobilePopup
+{
+    font-family: arial;
+    font-size:15px;
+    line-height:24px;
+    cursor:pointer;
+    width:350px;
+    height:55px;
+    right:20px;
+    padding:10px;
+    top:75px;
+    box-shadow: 5px 5px 5px #818181;
+    background:#ebebeb;
+    border-radius:3px;
+    color:#000;
+    position:absolute;
+}
+
+#mobilePopup span
+{
+    float:left;
+    width:260px;
+}
+
+#mobilePopup button
+{
+    float:right;
+    width:22px;
+    height:22px;
+    line-height:3px;
+    outline:none;
+    font-size:15px;
+    background:#777;
+    color:white;
+    vertical-align: middle;
+    border-radius:1px;
+    border: 0px;
+}
+
+#mobilePopup button:active
+{
+    background:#333;
+}
+
+#mobilePopup img
+{
+    background:red;
+    width:50px;
+    height:50px;
+    float:left;
+    margin-right:10px;
 }
 
 

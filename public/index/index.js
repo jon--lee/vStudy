@@ -6,10 +6,10 @@ if(cookie != null)
     $("#restore").css("display", "block");
     $("#signUpSection").css("height", "350px");
 }
-else
+/*else
 {
     createCookie("sessioncode", "lol");
-}
+}*/
 
 $(document).ready(function(){
     var socket = io("/index");
