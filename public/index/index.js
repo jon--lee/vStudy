@@ -2,9 +2,9 @@ var cookie = readCookie("sc"); //cookies name for session id should always be "s
 if(cookie != null)
 {
     console.log("value: " + cookie);
-    $("#signup").css("display", "none");
     $("#restore").css("display", "block");
-    $("#signUpSection").css("height", "350px");
+    $("#signUpSection").css("height", "420px");
+    $("#restore a").attr("href", cookie + "/");
 }
 /*else
 {
@@ -19,10 +19,6 @@ $(document).ready(function(){
         alert("code: " + code); 
     });
     
-    
-    
-    
-    
     var code;
     var link;
     socket.emit("requestCode");
@@ -31,12 +27,6 @@ $(document).ready(function(){
         link = document.URL + code + "/";
         $("#linkInput").val(link);
     });
-    var restoreLink;
-    if(cookie != null)
-    {
-        restoreLink = document.URL + cookie + "/";
-        $("#restoreLinkInput").val(restoreLink);
-    }
     
     
     $("#quickSessionButton").click(function(){

@@ -1,3 +1,10 @@
+html
+{
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none; 
+}
 body
 {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", helvetica, arial, "Lucida Grande", "sans-serif";
@@ -132,6 +139,7 @@ a
 
 #restore
 {
+    margin-top:10px;
     display:none;
 }
 
@@ -142,13 +150,15 @@ a
     color:#919191;
 }
 
-#restore p a
+#restore a
 {
-    color:#FFF;
-    background:#41cb41;
-    padding:7px;
-    border-radius:3px;
-    
+    color:#919191;
+    font-family: arial, "Lucida Grande", "sans-serif";
+}
+
+#restore a:hover
+{
+    text-decoration:underline;
 }
 
 #restore p a:active
