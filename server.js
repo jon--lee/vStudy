@@ -136,10 +136,6 @@ sessionNSP.on('connection', function (socket){
             delete roomsClient[socket.id];
         }
     });
-    socket.on("playRemote", function(room){
-        socket.broadcast.to(room).emit("playRemote");
-    });
-    
     socket.on("pauseRemote", function(room){
         console.log("telling remote to pause from the server!");
         socket.broadcast.to(room).emit("pauseRemote");
@@ -150,6 +146,7 @@ sessionNSP.on('connection', function (socket){
     });
     
     socket.on("sendPaint", function(room, drawingJSON){
+        console.log(room);
         socket.broadcast.to(room).emit("sendPaint", drawingJSON);
     });
     

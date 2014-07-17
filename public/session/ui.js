@@ -13,7 +13,7 @@ $('#selectorButton').click(function(){
     if(!onSelector) {swap();}
 });
 ////////////////////TESTING///////////////////
-$('#menuItems ul li').mouseover(function(){
+$('#menuItems ul li:not(#colorList > li)').mouseover(function(){
     select($(this));
 });
 
@@ -71,22 +71,27 @@ function swap(){
 }
 
 
-$('#pencilDetail').click(function(){
-    $('#menuItems ul li div').css('visibility', 'visible');
+$('#pencilDetail').click(togglePencilOptions);
+$('#colorList, #pencilOptions').click(function(e){
+    e.stopPropagation();
 });
+function togglePencilOptions()
+{
+    if($('#pencilOptions').css('display') == 'none')
+    {
+        $('#pencilOptions').css('display', 'block');
+    }
+    else
+    {
+        $('#pencilOptions').css('display', 'none');
+    }
+}
 
 
 
-$('#clearButton').mouseout(function(){
+$('#clearButton, #addButton').mouseout(function(){
     deselect($(this));
 });
-$('#addButton').mouseout(function(){
-    deselect($(this));
-});
-
-
-
-
 
 
 

@@ -10,7 +10,7 @@ $( document ).ready(function() {
     }
     else
     {
-        $("#mobilePopup").slideDown(800);
+        $("#mobilePopup").fadeIn(800);
     }
 
     //regardless of what is happening, reset the cookie (because old use may be going to new session
@@ -34,16 +34,23 @@ function configureInstructions(){
 
 $('#instructionOverlay, #closePopupButton').click(function(){
     hidePopup(); 
-    $("#mobilePopup").slideDown();
+    $("#mobilePopup").fadeIn(800);
 });
 
-function hidePopup(){
-    $('.popup').fadeOut();
+function hidePopup(obj){
+    if(obj != null)
+    {
+        obj.fadeOut();
+    }
+    else
+    {
+        $('.popup').fadeOut();
+    }
 }
 
 
 
-$('#mobilePopup').mouseenter(function(){
+$('.light').mouseenter(function(){
     $(this).animate({backgroundColor: "#fff" });
 }).mouseleave(function(){
     $(this).css('background', "#ebebeb" );
@@ -53,13 +60,24 @@ $('#mobilePopup').mouseenter(function(){
 }).mouseup(function(){
     $(this).css('background', '#fff');
     $(this).css('border', '0px');
-}).click(function(e){
+});
+
+$('#mobilePopup').click(function(e){
     if(!$(e.target).is('#mobilePopup button')){
         window.open("https://google.com", '_blank');        //send user away and then close this pop up
-        hidePopup();
+        hidePopup($(this));
     }
 });
 
-$('#mobilePopup button').click(function(){
-    hidePopup();
+$('#videoDisabledPopup').click(function(e){
+    if(!$(e.target).is('#videoDisabledPopup button')){
+        var link;
+        if(webrtcDetectedBrowser == "chrome") {link = "https://support.google.com/chrome/answer/2693767?hl=en";}
+        window.open(link, '_blank');        //send user away and then close this pop up
+        hidePopup($(this));
+    }
+});
+
+$('.xButton').click(function(){
+    hidePopup($(this).parent());
 });

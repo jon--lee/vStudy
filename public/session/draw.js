@@ -131,6 +131,17 @@ function mouseDown(evt)
 }
 
 
+$('#colorList li').click(function(e){
+    console.log("li clicked");
+    lineColor = $(this).css("background-color");
+    console.log("line color: " + lineColor);
+    resetContext();
+    togglePencilOptions();
+});
+
+
+
+
 //erase everything on the canvas (including images)
 //must also reset the context stuff
 

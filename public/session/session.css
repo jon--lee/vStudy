@@ -16,35 +16,40 @@ body
 
 .popup
 {
+    font-family: helvetica, arial;
     display:none;
-    z-index:10001
+    z-index:10001;
 }
 
-#mobilePopup
+.light
 {
-    font-family: arial;
     font-size:15px;
     line-height:24px;
-    cursor:pointer;
-    width:350px;
-    height:55px;
-    right:20px;
+    min-height:55px;
     padding:10px;
-    top:75px;
     box-shadow: 5px 5px 5px #818181;
     background:#ebebeb;
     border-radius:3px;
     color:#000;
     position:absolute;
+    opacity:.9;
+    cursor:pointer;
 }
 
-#mobilePopup span
+#mobilePopup
+{
+    width:350px;
+    right:20px;
+    top:75px;
+}
+
+.light span
 {
     float:left;
     width:260px;
 }
 
-#mobilePopup button
+.xButton
 {
     float:right;
     width:22px;
@@ -59,7 +64,7 @@ body
     border: 0px;
 }
 
-#mobilePopup button:active
+.xButton:active
 {
     background:#333;
 }
@@ -72,6 +77,15 @@ body
     float:left;
     margin-right:10px;
 }
+
+#videoDisabledPopup
+{
+    width:300px;
+    height:40px;
+    left:250px;
+    top:5px;
+}
+
 
 
 #instructionOverlay
@@ -216,13 +230,14 @@ body
 
 #header
 {
-    z-index: 8000;
+    position:relative;
     height:60px;
     width:100%;
     /*background:#2885ce; old blue background */
     background: #41cb41;
     color: #FFF;
     opacity:.90;
+    z-index: 8000;
     
 }
 
@@ -372,7 +387,7 @@ video
     
 }
 
-#menuItems ul
+#menuItems>ul
 {
     display:inline;
 	list-style:none;
@@ -382,7 +397,7 @@ video
     cursor:pointer;
 }
 
-#menuItems ul li
+#menuItems>ul>li
 {
     padding:7px 20px;
     padding-top:6px;
@@ -395,16 +410,40 @@ video
 	list-style:none;
 }
 
-#menuItems ul li div
+#pencilOptions
 {
-    width:100px;
-    height:100px;
-    background:blue;
-    visibility:hidden;
-    margin-left:10px;    /*use this to edit the location (don't use "left: 10px")*/
+    width:200px;
+    height:150px;
+    /*display:none;*/
+    background:#f1f1f1;
+    margin-left:50px;    /*use this to edit the location (don't use "left: 10px")*/
+    margin-top:6px;
     position:absolute;
+    
 }
 
+#colorList
+{
+    list-style: none;
+    float:left;
+    margin-top:0px;
+    padding-left:0px;
+}
+#colorList li
+{
+    float:left;
+    height:36px;
+    width:36px;
+    margin-left:10px;
+    margin-top:10px;
+    border-radius:10px;
+    border:1px solid transparent;
+}
+
+#colorList li:hover
+{
+    border:1px solid #f1f1f1;
+}
 
 
 

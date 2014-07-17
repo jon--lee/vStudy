@@ -15,6 +15,7 @@ var localStream;
 var pc;
 var remoteStream;
 var turnReady;
+var videoButtonClicked = false;
 var gettingUserMedia = false;
 //var gotThisUserMedia = false;
 var constraints = {video: true, audio: true};
@@ -67,7 +68,7 @@ socket.on('joined', function (room){
 });
 
 socket.on('peerLeft', function(room){
-    //console.log("your peer left the room");
+    console.log("your peer left the room");
     //isChannelReady = false;
     isInitiator = true;
     hangup();
@@ -127,6 +128,7 @@ function handleUserMedia(stream) {
   sendMessage('got user media');
     gettingUserMedia = false;
     gotThisUserMedia = true;
+    videoButtonClicked = false;
   if (isInitiator) {
     maybeStart();
   }
@@ -137,6 +139,12 @@ function handleUserMedia(stream) {
 function handleUserMediaError(error){
   //console.log('getUserMedia error: ', error);
     isChannelReady = false;
+    if(videoButtonClicked && webrtcDetectedBrowser == "chrome")
+    {
+        //show popup
+        $('#videoDisabledPopup').fadeIn(800);
+    }
+    videoButtonClicked = false;
     gettingUserMedia = false;
     gotThisUserMedia = false;
     socket.emit("leaveRoom", room);
@@ -270,7 +278,8 @@ function handleRemoteStreamAdded(event) {
     attachMediaStream(remoteVideo, event.stream);
   //remoteVideo.src = window.URL.createObjectURL(event.stream);
   remoteStream = event.stream;
-    play($('#localVideo'), $('#localVideoOverlay'))
+    //console.log("remote stream added");
+    //play($('#localVideo'), $('#localVideoOverlay'))
     /////////////MAKE THE LOCAL VIDEO START PLAYING AS SOON AS THE REMOTE VIDEO IS ADDED///////////////////
     
 }
@@ -399,10 +408,12 @@ function localClicked(){
     }
 }
 
-socket.on("pauseRemote", function (room){
+socket.on("pauseRemote", function (){
+    console.log("got it, should be pausing remote");
     pause($('#remoteVideo'), $('#remoteVideoOverlay'));
 });
-socket.on("playRemote", function(room){
+socket.on("playRemote", function(){
+    console.log("got it should be playing now");
     play($('#remoteVideo'), $('#remoteVideoOverlay'));
 });
 
@@ -445,9 +456,12 @@ $('#videoButton').mouseout(function(){
 $('#videoButton').click(function(){
     if(videoOpen == false)
     {
+        videoButtonClicked = true;
         select($(this));
         videoOpen = true;
+        
         $('#videos').show("slow");
+        
         if(!isStarted && !gettingUserMedia)
         {
             getUserMedia(constraints, handleUserMedia, handleUserMediaError);
