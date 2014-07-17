@@ -94,10 +94,23 @@ sessionNSP.on('connection', function (socket){
 	});
 
 	socket.on('create or join', function (room) {
-		var numClients = getNumClients(room);
+		var roomlist = sessionNSP.adapter.rooms[room];
+        var numClients = 0;
+        if(roomlist)
+        {
+            console.log("room list");
+            for (var id in roomlist)
+            {
+                numClients++;
+            }
+        }
+        else
+        {
+            console.log("no room list DAMMIT");
+        }
 
-		log('Room ' + room + ' has ' + numClients + ' client(s)');
-		log('Request to create or join room', room);
+		//log('Room ' + room + ' has ' + numClients + ' client(s)');
+		//log('Request to create or join room', room);
 		if (numClients == 0){
 			socket.join(room);
             socket.emit('joined', room);
@@ -136,14 +149,7 @@ sessionNSP.on('connection', function (socket){
             delete roomsClient[socket.id];
         }
     });
-    socket.on("pauseRemote", function(room){
-        console.log("telling remote to pause from the server!");
-        socket.broadcast.to(room).emit("pauseRemote");
-    });
-    socket.on("playRemote", function(room){
-        console.log("telling the remote to play from the server!");
-        socket.broadcast.to(room).emit("playRemote");
-    });
+    
     
     socket.on("sendPaint", function(room, drawingJSON){
         console.log(room);
@@ -172,6 +178,21 @@ function getNumClients(room)
         }
     }
     return count;
+}
+
+function getNumClients2(roomid){
+    var room = io.sockets.adapter.rooms[roomid];
+    localCount = 0;
+    if (room) {
+        for (var id in room) {
+            localCount ++;
+        }
+    }
+    else
+    {
+        console.log("no room!");
+    }
+    return localCount;
 }
 
 function findClientsSocketByRoomId(roomId) {
