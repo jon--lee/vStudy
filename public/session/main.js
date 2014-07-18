@@ -47,23 +47,23 @@ if (room !== '') {
 }
 
 socket.on('created', function (room){
-  //console.log('Created room ' + room);
+  console.log('Created room ' + room);
   isInitiator = true;
 });
 
 //deconstruct the page and warn that it is full
 socket.on('full', function (room){
-  //console.log('Room ' + room + ' is full');
+  console.log('Room ' + room + ' is full');
 });
 
 socket.on('join', function (room){
-  //console.log('Another peer made a request to join room ' + room);
-  //console.log('This peer is the initiator of room ' + room + '!');
+  console.log('Another peer made a request to join room ' + room);
+  console.log('This peer is the initiator of room ' + room + '!');
   isChannelReady = true;
 });
 
 socket.on('joined', function (room){
-  //console.log('This peer has joined room ' + room);
+  console.log('This peer has joined room ' + room);
   isChannelReady = true;
 });
 

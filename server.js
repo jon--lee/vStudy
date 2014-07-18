@@ -94,21 +94,8 @@ sessionNSP.on('connection', function (socket){
 	});
 
 	socket.on('create or join', function (room) {
-		var roomlist = sessionNSP.adapter.rooms[room];
-        var numClients = 0;
-        if(roomlist)
-        {
-            console.log("room list");
-            for (var id in roomlist)
-            {
-                numClients++;
-            }
-        }
-        else
-        {
-            console.log("no room list DAMMIT");
-        }
-
+		var numClients = getNumClients(room);
+        
 		//log('Room ' + room + ' has ' + numClients + ' client(s)');
 		//log('Request to create or join room', room);
 		if (numClients == 0){
@@ -128,7 +115,6 @@ sessionNSP.on('connection', function (socket){
 		socket.broadcast.emit('broadcast(): client ' + socket.id + ' joined room ' + room);
 
 	});
-    
     socket.on("leaveRoom", function(room){
         socket.leave(room);
         socket.broadcast.to(room).emit("peerLeft", room);
@@ -136,7 +122,6 @@ sessionNSP.on('connection', function (socket){
         removeFromRoom(room, socket.id);
         
     });
-    
     socket.on("disconnect", function(){
         if(roomsClient[socket.id] != null){
             for (var i = 0; i < roomsClient[socket.id].length; i++)
@@ -149,8 +134,6 @@ sessionNSP.on('connection', function (socket){
             delete roomsClient[socket.id];
         }
     });
-    
-    
     socket.on("sendPaint", function(room, drawingJSON){
         console.log(room);
         socket.broadcast.to(room).emit("sendPaint", drawingJSON);
@@ -165,8 +148,20 @@ function removeFromRoom(room, socketid)
 }
 
 
-//the room at key "room" must be defined (this method does not check for that and will throw an error
 function getNumClients(room)
+{
+    var roomlist = sessionNSP.adapter.rooms[room];
+    var numClients = 0;
+    if(roomlist){
+        for (var id in roomlist){
+            numClients++;
+        }
+    }
+    return numClients;
+}
+
+//the room at key "room" must be defined (this method does not check for that and will throw an error
+/*function getNumClient2(room)
 {
     var count = 0;
     for (var clientId in roomsClient)
@@ -180,7 +175,7 @@ function getNumClients(room)
     return count;
 }
 
-function getNumClients2(roomid){
+function getNumClients3(roomid){
     var room = io.sockets.adapter.rooms[roomid];
     localCount = 0;
     if (room) {
@@ -194,7 +189,7 @@ function getNumClients2(roomid){
     }
     return localCount;
 }
-
+*/
 function findClientsSocketByRoomId(roomId) {
 var res = []
 , room = io.sockets.adapter.rooms[roomId];
