@@ -8,7 +8,7 @@
 
 //'use strict';
 
-var isChannelReady;
+var isChannelReady = false;
 var isInitiator = false;
 var isStarted = false;
 var localStream;
@@ -59,12 +59,12 @@ socket.on('full', function (room){
 socket.on('join', function (room){
   console.log('Another peer made a request to join room ' + room);
   console.log('This peer is the initiator of room ' + room + '!');
-  isChannelReady = true;
+  //isChannelReady = true;
 });
 
 socket.on('joined', function (room){
   console.log('This peer has joined room ' + room);
-  isChannelReady = true;
+  //isChannelReady = true;
 });
 
 socket.on('peerLeft', function(room){
@@ -95,11 +95,14 @@ socket.on('message', function (message){
   //console.log('Client received message:', message);
   if (message === 'got user media') {
       isStarted = false;
-  	maybeStart();
+      if(isChannelReady){
+        maybeStart();
+          doCall();
+      }
   } else if (message.type === 'offer') {
-    if (!isInitiator && !isStarted) {
+    //if (!isInitiator && !isStarted) {
       maybeStart();
-    }
+    //}
     pc.setRemoteDescription(new RTCSessionDescription(message));
     doAnswer();
   } else if (message.type === 'answer' && isStarted) {
@@ -125,13 +128,14 @@ function handleUserMedia(stream) {
   //localVideo.src = window.URL.createObjectURL(stream);
     attachMediaStream(localVideo, stream);
   localStream = stream;
+    isChannelReady = true;
   sendMessage('got user media');
     gettingUserMedia = false;
     gotThisUserMedia = true;
     videoButtonClicked = false;
-  if (isInitiator) {
+  /*if (isInitiator) {
     maybeStart();
-  }
+  }*/
 }
 
 //clear the page for use without the video
@@ -147,6 +151,7 @@ function handleUserMediaError(error){
     videoButtonClicked = false;
     gettingUserMedia = false;
     gotThisUserMedia = false;
+    isChannelReady =false;
     socket.emit("leaveRoom", room);
     deselectVideo();
     $('.draggableHelper').draggable({
@@ -177,9 +182,9 @@ function maybeStart() {
     pc.addStream(localStream);
     isStarted = true;
     //console.log('isInitiator: ', isInitiator);
-    if (isInitiator) {
+    /*if (isInitiator) {
       doCall();
-    }
+    }*/
   }
 }
 
@@ -440,6 +445,7 @@ $('#closeButton').click(function(){
     if(localStream != null){ localStream.stop(); }
     isStarted = false;
     gotThisUserMedia = false;
+    isChannelReady = false;
 });
 
 $('#videoButton').mouseover(function(){
