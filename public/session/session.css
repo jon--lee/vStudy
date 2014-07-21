@@ -410,13 +410,15 @@ video
 	list-style:none;
 }
 
+
+
 #pencilOptions
 {
     width:200px;
     height:150px;
-    /*display:none;*/
+    display:none;
     background:#f1f1f1;
-    margin-left:50px;    /*use this to edit the location (don't use "left: 10px")*/
+    margin-left:38px;    /*use this to edit the location (don't use "left: 10px")*/
     margin-top:6px;
     position:absolute;
     
@@ -443,6 +445,13 @@ video
 #colorList li:hover
 {
     border:1px solid #f1f1f1;
+}
+
+#eraserButton
+{
+    position:relative;
+    background:#cecece;
+    margin-right:10px;
 }
 
 

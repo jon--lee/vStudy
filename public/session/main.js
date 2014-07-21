@@ -390,12 +390,7 @@ function removeCN(sdpLines, mLineIndex) {
   return sdpLines;
 }
 
-$('#localVideo').click(localClicked);
-$('#localVideoOverlay').click(localClicked);
-
-
-
-function localClicked(){
+$('#localVideo, #localVideoOverlay').click(function(){
     var locVid = $('#localVideo');
     if(locVid.get(0).paused)
     {
@@ -411,7 +406,7 @@ function localClicked(){
         console.log("telling the remote user to pause");
         socket.emit("pauseRemote", room);
     }
-}
+});
 
 socket.on("pauseRemote", function (){
     console.log("got it, should be pausing remote");

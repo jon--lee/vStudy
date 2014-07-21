@@ -138,7 +138,14 @@ sessionNSP.on('connection', function (socket){
         console.log(room);
         socket.broadcast.to(room).emit("sendPaint", drawingJSON);
     });
-    
+    socket.on("pauseRemote", function(room){
+        console.log("from server: telling remote to pause");
+        socket.broadcast.to(room).emit("pauseRemote");
+    });
+    socket.on("playRemote", function(room){
+        console.log("from server: telling remote to pause");
+        socket.broadcast.to(room).emit("playRemote");
+    });
 });
 
 function removeFromRoom(room, socketid)
