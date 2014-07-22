@@ -14,6 +14,8 @@ $('.image').resizable({
     stop: function(event, ui){
         console.log("stopped resizing");    //should send info via websocket now
         //set the z-index to parent because its fine now
+        sendImage($(this));
+        
     }
 });
 
@@ -26,6 +28,7 @@ $('.draggableHelper').draggable({
     },
     stop: function(){
         console.log("stop dragging");       //should send the info via websocket now
+        sendImage($(this));
     }                           
 });
 
@@ -36,7 +39,17 @@ $('#videos').draggable({
 
 
 
-
+function sendImage(imageElement)
+{
+    var image = {
+        'height': imageElement.style.height,
+        'width': imageElement.style.width,
+        'pos': {x:-1, y:-1},
+        'tag': imageElement.attr('tag');
+    };
+    var imageJSON = JSON.stringify(image);
+    socket.emit("sendImage", room, imageJSON);
+}
 
 
 //http://jqueryui.com/draggable/#events for reading stops and starts and drags
@@ -87,6 +100,12 @@ socket.on('sendPaint', function (drawingJSON){
     //now reset the styles for this peer
     context.lineWidth = lineWidth;
     context.strokeStyle = lineColor;
+});
+
+
+socket.on('sendImage', function(imageJSON){
+   var image = JSON.parse(imageJSON);
+    
 });
 
 //MUST BE OFF THE SELECTOR TO DO ANY OF THESE FUNCTIONS
