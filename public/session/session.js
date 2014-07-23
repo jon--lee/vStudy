@@ -79,5 +79,5 @@ $('#videoDisabledPopup').click(function(e){
 });
 
 $('.xButton').click(function(){
-    hidePopup($(this).parent());
+    hidePopup($(this).parent().parent());
 });

@@ -7,15 +7,12 @@ $('.image').resizable({
     containment: "#imageContainer",
     start: function(event, ui){
         console.log("started resizing");
-        //set the z-index to really high because it should now be the fore-front
         maxSelectorIndex++;
         $(this).parent().css("z-index", maxSelectorIndex.toString());
     },
     stop: function(event, ui){
         console.log("stopped resizing");    //should send info via websocket now
-        //set the z-index to parent because its fine now
         sendImage($(this));
-        
     }
 });
 
@@ -27,9 +24,9 @@ $('.draggableHelper').draggable({
         $(this).css("z-index", maxSelectorIndex.toString());
     },
     stop: function(){
-        console.log("stop dragging");       //should send the info via websocket now
+        console.log("stop dragging");       //should send info via websocket now
         sendImage($(this));
-    }                           
+    }
 });
 
 $('#videos').draggable({
@@ -41,14 +38,9 @@ $('#videos').draggable({
 
 function sendImage(imageElement)
 {
-    var image = {
-        'height': imageElement.style.height,
-        'width': imageElement.style.width,
-        'pos': {x:-1, y:-1},
-        'tag': imageElement.attr('tag');
-    };
-    var imageJSON = JSON.stringify(image);
-    socket.emit("sendImage", room, imageJSON);
+    var image = new Image();
+    image.setImage(imageElement);
+    socket.emit("sendImage", room, JSON.stringify(image));
 }
 
 

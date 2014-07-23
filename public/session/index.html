@@ -54,14 +54,12 @@
         <div class='popup instruction' id='instructionOverlay'></div>
         <div class='popup light' id='mobilePopup'>
             <img src='' />
-            <span>Download the app to draw straight from your mobile device to your computer!</span>
-            <button class='xButton'>x</button>
+            <span><button class='xButton'>Close</button>Download the app to draw straight from your mobile device to your computer!</span>
         </div>
         <div class='popup light' id='videoDisabledPopup'>
-            <span>Your mic and camera are disabled!
+            <span><button class='xButton'>Close</button>Your mic and camera are disabled!
                 <br>
             Find out how to enable them.</span>
-            <button class='xButton'>x</button>
         </div>
         
         <div id='container'>
@@ -129,9 +127,11 @@
                         <canvas id='canvas'></canvas>
                         <div id='imageContainer'>
                             <div class='draggableHelper' style="display:inline-block">
-                                <img class="image" class="ui-widget-content" style='' src='http://www.google.com.br/images/srpr/logo3w.png' />                          </div>
+                                <img id='' class="image" class="ui-widget-content" style='' src='http://www.google.com.br/images/srpr/logo3w.png' />
+                            </div>
                             <div class='draggableHelper' style="display:inline-block">
-                                <img class="image" class="ui-widget-content" style='' src='http://www.google.com.br/images/srpr/logo3w.png' />                          </div>
+                                <img id= '' class="image" class="ui-widget-content" style='' src='http://www.google.com.br/images/srpr/logo3w.png' />
+                            </div>
                         </div>
                         
                     </div>
@@ -147,6 +147,7 @@
         <script type='text/javascript' src='../socket.io/socket.io.js'></script>
         <script type='text/javascript' src='../js/lib/adapter.js'></script>
         <script type='text/javascript' src='../js/cookies.js'></script>
+        <script type='text/javascript' src='../session/image.js'></script>
         <script type='text/javascript' src='../session/session.js'></script>
         <script type='text/javascript' src='../session/socket.js'></script>
         <script type='text/javascript' src='../session/ui.js'></script>
