@@ -317,7 +317,7 @@ video
 
 .videoOverlay
 {
-    visibility:hidden;
+    display:none;
     background:black;
     opacity:.50;
     width:250px;
@@ -325,6 +325,15 @@ video
     float:left;
     z-index:9010;
     position:absolute;
+}
+
+#snapshotButton
+{
+    position:absolute;
+    left:125px;
+    top:170px;
+    z-index:9008;
+    cursor:pointer;
 }
 
 #localVideoOverlay

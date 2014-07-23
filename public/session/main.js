@@ -18,7 +18,20 @@ var turnReady;
 var videoButtonClicked = false;
 var gettingUserMedia = false;
 //var gotThisUserMedia = false;
-var constraints = {video: true, audio: true};
+//var constraints = {audio: true, video: true};
+var constraints = {
+ "audio": true,
+ "video": {
+  "mandatory": {
+   "minWidth": "320",
+   "maxWidth": "1280",
+   "minHeight": "180",
+   "maxHeight": "720",
+   "minFrameRate": "5",
+  },
+  "optional": []
+ }
+}
 var pc_config = {'iceServers': [{'url': 'stun:stun.l.google.com:19302'}]};
 
 var pc_constraints = {'optional': [{'DtlsSrtpKeyAgreement': true}]};
@@ -394,8 +407,8 @@ $('#localVideo, #localVideoOverlay').click(function(){
     var locVid = $('#localVideo');
     if(locVid.get(0).paused)
     {
-        if(isStarted){ 
-            play(locVid, $('#localVideoOverlay')); 
+        if(isChannelReady){  
+            play(locVid, $('#localVideoOverlay'));
             console.log("telling the remote user to play!");
             socket.emit("playRemote", room);
         }
@@ -420,14 +433,30 @@ socket.on("playRemote", function(){
 function play(vid, overlay)
 {
     vid.get(0).play();
-    overlay.css('visibility', 'hidden');
+    overlay.css('display', 'none');
 }
 
 function pause(vid, overlay)
 {
     vid.get(0).pause();
-    overlay.css('visibility', 'visible');
+    overlay.css('display', 'block');
 }
+
+//snapshot button is always behind overlay so you can guarantee that it will not be clicked when overlay is present (ie paused)
+$('#snapshotButton').click(function(){
+    if(isChannelReady)
+    {
+        var temp = $('#localVideoOverlay').css('background');
+        $('#localVideoOverlay').css('background', '#FFF');
+        $('#localVideoOverlay').css('display', 'block');
+        $('#localVideoOverlay').fadeOut(300).delay(300);
+        setTimeout(function(){
+            $('#localVideoOverlay').css('background', temp);
+        }, 500);
+        
+    }
+});
+
 
 //minimize the video by hiding it and showing the "open video" button
 $('#minimizeButton').click(function(){
@@ -437,6 +466,7 @@ $('#minimizeButton').click(function(){
 //minimize the video by hiding it and showing the "open video" button
 $('#closeButton').click(function(){
     deselectVideo();
+    $('#localVideoOverlay, #remoteVideoOverlay').css('display', 'none');
     if(localStream != null){ localStream.stop(); }
     isStarted = false;
     gotThisUserMedia = false;
