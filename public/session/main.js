@@ -461,9 +461,26 @@ $('#snapshotButton').click(function(){
 
 
 function makeImage(){
-    var snapshot = $('#snapshot');
     
-    //snapshot.width = 
+    var snapshot = document.getElementById('snapshot');
+    var locVid = document.getElementById('localVideo')
+    snapshot.width = locVid.clientWidth;
+    snapshot.height = locVid.clientHeight;
+    var c = snapshot.getContext('2d');
+    c.fillRect(0, 0, snapshot.width, snapshot.height);
+    c.drawImage(locVid, 0, 0, snapshot.width, snapshot.height);
+    
+    var div = $("<div>", {
+        class: 'draggableHelper',
+    }).css("display", "inline-block");
+    var img = $('<img>');
+    img.attr('src', snapshot.toDataURL("image/png"));
+    img.attr('class', 'image ui-widget-content');
+    img.appendTo(div);
+    div.appendTo($('#imageContainer'));
+    
+    setImageUI();
+    
 }
 
 //minimize the video by hiding it and showing the "open video" button

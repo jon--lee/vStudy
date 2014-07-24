@@ -71,7 +71,6 @@ body
 
 #mobilePopup img
 {
-    background:red;
     width:50px;
     height:50px;
     float:left;
@@ -105,9 +104,9 @@ body
     position:absolute;
     top:35px;
     left:50%;
-    margin-left: -500px;
+    margin-left: -400px;
     height:450px;
-    width:1000px;
+    width:800px;
 }
 
 #popupBanner
@@ -137,6 +136,11 @@ body
     font-size:18px;
 }
 
+#popupContent a
+{
+    text-decoration:underline;
+}
+
 #popupContent span
 {
     color:#000;
@@ -162,7 +166,6 @@ body
 #popupContent ul li img
 {
     float:left;
-    background:#919191;
     height:80px;
     width:80px;
     margin-right:20px;
@@ -469,5 +472,10 @@ video
     margin-right:10px;
 }
 
+
+.draggableHelper
+{
+    color:blue;
+}
 
 

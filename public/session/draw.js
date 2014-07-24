@@ -3,7 +3,11 @@ var lineColor = '#00000'    //default value
 
 //makes it so that all images are resizable
 var maxSelectorIndex = 200;
-$('.image').resizable({
+setImageUI();
+
+function setImageUI()
+{
+    $('.image').resizable({
     containment: "#imageContainer",
     start: function(event, ui){
         console.log("started resizing");
@@ -28,8 +32,7 @@ $('.draggableHelper').draggable({
         sendImage($(this));
     }
 });
-
-
+}
 
 
 
