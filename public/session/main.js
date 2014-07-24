@@ -470,11 +470,13 @@ function makeImage(){
     c.fillRect(0, 0, snapshot.width, snapshot.height);
     c.drawImage(locVid, 0, 0, snapshot.width, snapshot.height);
     
+    maxSelectorIndex++;
     var div = $("<div>", {
         class: 'draggableHelper',
-    }).css("display", "inline-block");
+    }).css("display", "inline-block").css("z-index", maxSelectorIndex.toString());
     var img = $('<img>');
     img.attr('src', snapshot.toDataURL("image/png"));
+    console.log(snapshot.toDataURL("image/png"));
     img.attr('class', 'image ui-widget-content');
     img.appendTo(div);
     div.appendTo($('#imageContainer'));

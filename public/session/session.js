@@ -2,7 +2,7 @@ $( document ).ready(function() {
     var gotThisUserMedia = false;
     var cookie = readCookie("sc");
                             //THIS IS HERE FOR TESTING AND SHOULD BE PUT IN THE IF(COOKIE==NULL) SECTION FOR PRODUCTION
-    if(null == null)
+    if(cookie == null)
     {
         //display the popup
         showPopup($(".instruction"));

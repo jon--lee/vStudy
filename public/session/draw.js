@@ -1,4 +1,5 @@
 var lineWidth = 4;          //default value
+var eraserLineWidth = 30;
 var lineColor = '#00000'    //default value
 
 //makes it so that all images are resizable
@@ -144,9 +145,18 @@ function mouseDown(evt)
 
 $('#colorList li').click(function(e){
     console.log("li clicked");
-    lineColor = $(this).css("background-color");
-    console.log("line color: " + lineColor);
-    resetContext();
+    if($(this).attr("id") == "eraserButton")
+    {
+        console.log("eraser clicked");
+        lineColor = "rgba(0,0,0,1)";
+        resetContext("destination-out");
+    }
+    else
+    {
+        lineColor = $(this).css("background-color");
+        console.log("line color: " + lineColor);
+        resetContext();
+    }
     togglePencilOptions();
 });
 
@@ -162,10 +172,22 @@ $('#clearButton').click(function(){
     hideImages();
 });
 
-function resetContext()
+function resetContext(composite)
 {
+    
     context = canvas.getContext('2d');
     context.lineWidth = lineWidth;
+    if(composite == null)
+    {
+        console.log("composite is null");
+        context.globalCompositeOperation = "source-over"; 
+        context.lineWidth = lineWidth;
+    }
+    else
+    {
+        context.globalCompositeOperation = "destination-out";
+        context.lineWidth = eraserLineWidth;
+    }
     context.strokeStyle = lineColor;
     context.lineCap = 'round';
 }

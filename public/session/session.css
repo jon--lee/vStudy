@@ -470,6 +470,9 @@ video
     position:relative;
     background:#cecece;
     margin-right:10px;
+    text-align:center;
+    color:black;
+    line-height: 30px;
 }
 
 
