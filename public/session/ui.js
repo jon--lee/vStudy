@@ -5,6 +5,12 @@ select($('#pencilButton'));
 select($('#pencilDetail'));
 select($('#videoButton'));
 
+$('#videos').draggable({
+    containment: "#content",
+    cancel: "video, #options, .videoOverlay"
+});
+
+
 $('#pencilButton').click(function(){
     if(onSelector) {swap();}
 });
@@ -48,6 +54,16 @@ $('#selectorButton').mouseout(function(){
     }
 });
 
+$('#pencilDetail').click(togglePencilOptions);
+$('#colorList, #pencilOptions').click(function(e){
+    e.stopPropagation();
+});
+
+$('#clearButton, #addButton').mouseout(function(){
+    deselect($(this));
+});
+
+
 //////////////////////END TESTING ///////////////////////
 
 function swap(){
@@ -71,10 +87,7 @@ function swap(){
 }
 
 
-$('#pencilDetail').click(togglePencilOptions);
-$('#colorList, #pencilOptions').click(function(e){
-    e.stopPropagation();
-});
+
 function togglePencilOptions()
 {
     if($('#pencilOptions').css('display') == 'none')
@@ -89,9 +102,6 @@ function togglePencilOptions()
 
 
 
-$('#clearButton, #addButton').mouseout(function(){
-    deselect($(this));
-});
 
 
 

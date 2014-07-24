@@ -334,6 +334,12 @@ video
     top:170px;
     z-index:9008;
     cursor:pointer;
+    opacity:.7;
+}
+
+#snapshotButton:hover
+{
+    opacity:1;
 }
 
 #localVideoOverlay

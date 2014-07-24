@@ -17,6 +17,7 @@ var remoteStream;
 var turnReady;
 var videoButtonClicked = false;
 var gettingUserMedia = false;
+var loc = $('#localVideo');
 //var gotThisUserMedia = false;
 //var constraints = {audio: true, video: true};
 var constraints = {
@@ -404,18 +405,18 @@ function removeCN(sdpLines, mLineIndex) {
 }
 
 $('#localVideo, #localVideoOverlay').click(function(){
-    var locVid = $('#localVideo');
-    if(locVid.get(0).paused)
+    //var locVid = $('#localVideo');
+    if(loc.get(0).paused)
     {
         if(isChannelReady){  
-            play(locVid, $('#localVideoOverlay'));
+            play(loc, $('#localVideoOverlay'));
             console.log("telling the remote user to play!");
             socket.emit("playRemote", room);
         }
     }
     else
     {
-        pause(locVid, $('#localVideoOverlay'));
+        pause(loc, $('#localVideoOverlay'));
         console.log("telling the remote user to pause");
         socket.emit("pauseRemote", room);
     }
@@ -449,14 +450,20 @@ $('#snapshotButton').click(function(){
         var temp = $('#localVideoOverlay').css('background');
         $('#localVideoOverlay').css('background', '#FFF');
         $('#localVideoOverlay').css('display', 'block');
-        $('#localVideoOverlay').fadeOut(300).delay(300);
+        $('#localVideoOverlay').fadeOut(100);
         setTimeout(function(){
             $('#localVideoOverlay').css('background', temp);
-        }, 500);
-        
+        }, 100);
+        makeImage();
     }
 });
 
+
+function makeImage(){
+    var snapshot = $('#snapshot');
+    
+    //snapshot.width = 
+}
 
 //minimize the video by hiding it and showing the "open video" button
 $('#minimizeButton').click(function(){

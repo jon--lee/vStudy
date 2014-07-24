@@ -29,10 +29,7 @@ $('.draggableHelper').draggable({
     }
 });
 
-$('#videos').draggable({
-    containment: "#content",
-    cancel: "video, #options, .videoOverlay"
-});
+
 
 
 
