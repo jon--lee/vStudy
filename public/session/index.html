@@ -60,7 +60,7 @@
         <div class='popup light' id='videoDisabledPopup'>
             <span><button class='xButton'>Close</button>Your mic and camera are disabled!
                 <br>
-            Find out how to enable them.</span>
+            Click to find out how to enable them.</span>
         </div>
         
         <div id='container'>
@@ -87,7 +87,8 @@
                                     <li id='purple' style='background:#a941f4'></li>
                                     <li id='pink' style='background:#fd50a1'></li>
                                     <li id='orange' style='background:#ff9b29'></li>
-                                    <li id='eraserButton' style='width:180px'>Eraser</li>
+                                    <li id='eraserButton' class='eraserButton' style='width:180px'>Eraser</li>
+                                    <li id='boxEraserButton' class='eraserButton' style='width:180px'>Box Eraser</li>
                                 </ul>   
                             </div>
                         </li>
@@ -126,7 +127,7 @@
                         </div>
                     </div>
                     <div id='canvasContent'>
-                        
+                        <div id='cursor'></div>
                         <canvas id='canvas'></canvas>
                         <div id='imageContainer'>
                             <div class='draggableHelper' style="display:inline-block">

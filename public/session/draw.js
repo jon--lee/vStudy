@@ -1,6 +1,10 @@
 var lineWidth = 4;          //default value
 var eraserLineWidth = 30;
 var lineColor = '#00000'    //default value
+var boxMode = false;
+const ERASE = "destination-out";  //constant, do not change
+const DRAW = "source-over";       //constant, do not change
+var composite = DRAW;
 
 //makes it so that all images are resizable
 var maxSelectorIndex = 200;
@@ -73,7 +77,7 @@ canvas.height = canvasContent.height();
     canvas.height = canvasContent.height();
 });*/
 
-var context;
+var context = canvas.getContext("2d");
 resetContext();
 /*context.beginPath();
 context.moveTo(100, 150);
@@ -86,13 +90,14 @@ socket.on('sendPaint', function (drawingJSON){
     var drawing = JSON.parse(drawingJSON);
     context.lineWidth = drawing["lineWidth"];
     context.strokeStyle = drawing["lineColor"];
+    context.globalCompositeOperation = drawing["composite"];
     context.beginPath();
     context.moveTo(drawing["startCoords"].x, drawing["startCoords"].y);
     context.lineTo(drawing["endCoords"].x, drawing["endCoords"].y);
     context.stroke();
-    //now reset the styles for this peer
-    context.lineWidth = lineWidth;
-    context.strokeStyle = lineColor;
+    //now manually reset the styles for this peer
+    resetContext();
+    
 });
 
 
@@ -113,7 +118,7 @@ canvas.addEventListener('mousedown', mouseDown);
 
 function mouseMove(evt)
 {
-    if(isDown && !onSelector){
+    if(isDown && !onSelector && !boxMode){
         var newCoords = getMousePos(canvas, evt);
         context.beginPath();
         context.moveTo(coords.x, coords.y);
@@ -124,22 +129,71 @@ function mouseMove(evt)
             "startCoords": coords,
             "endCoords": newCoords,
             "lineWidth": lineWidth,
-            "lineColor": lineColor
+            "lineColor": lineColor,
+            "composite": composite
         };
         drawingJSON = JSON.stringify(drawing);
         socket.emit("sendPaint", room, drawingJSON);
         coords = newCoords;
+        console.log("this is getting called");
+    }
+    if(boxMode && isDown && !onSelector)
+    {
+        console.log("drawing box");
+        //show the box
+        $('#cursor').css('display', 'block');
+        var newCoords = getMousePos(canvas, evt);
+        var startPos = {};
+        startPos.x = coords.x;
+        startPos.y = coords.y;
+        if(newCoords.x < coords.x)
+        {
+            startPos.x = newCoords.x;
+        }
+        if(newCoords.y < coords.y)
+        {
+            startPos.y = newCoords.y;
+        }
+        console.log(coords.x + " - " + newCoords.x);
+        console.log(coords.y + " - " + newCoords.y);
+        var dims = {w: Math.abs(coords.x - newCoords.x), h: Math.abs(coords.y - newCoords.y)};
+        $('#cursor').height(dims.h);
+        $('#cursor').width(dims.w);
+        $('#cursor').css({left: startPos.x + "px", top: startPos.y + "px"});
     }
 }
 function mouseUp(evt)
 {
     isDown = false;
+    if(boxMode)
+    {
+        $('#cursor').css('display', 'none');
+        //use the area as an eraser
+        var newCoords = getMousePos(canvas, evt);
+        var startPos = {};
+        startPos.x = coords.x;
+        startPos.y = coords.y;
+        if(newCoords.x < coords.x)
+        {
+            startPos.x = newCoords.x;
+        }
+        if(newCoords.y < coords.y)
+        {
+            startPos.y = newCoords.y;
+        }
+        var dims = {w: Math.abs(coords.x - newCoords.x), h: Math.abs(coords.y - newCoords.y)};
+        context.beginPath();
+        context.rect(startPos.x, startPos.y, dims.w, dims.h);
+        context.fillStyle = "rgba(0,0,0,1)";
+        context.fill();
+        context.stroke();
+    }
 }
 
 function mouseDown(evt)
 {
     isDown = true;
-    coords = getMousePos(canvas, evt)
+    coords = getMousePos(canvas, evt);
 }
 
 
@@ -147,13 +201,25 @@ $('#colorList li').click(function(e){
     console.log("li clicked");
     if($(this).attr("id") == "eraserButton")
     {
+        boxMode = false;
         console.log("eraser clicked");
         lineColor = "rgba(0,0,0,1)";
-        resetContext("destination-out");
+        composite = ERASE;
+        resetContext();
+        
+    }
+    else if($(this).attr("id") == "boxEraserButton")
+    {
+        boxMode = true;
+        lineColor = "rgba(0,0,0,1)";
+        composite = ERASE;
+        resetContext();
     }
     else
     {
+        boxMode = false;
         lineColor = $(this).css("background-color");
+        composite = DRAW;
         console.log("line color: " + lineColor);
         resetContext();
     }
@@ -172,22 +238,24 @@ $('#clearButton').click(function(){
     hideImages();
 });
 
-function resetContext(composite)
+function resetContext()
 {
     
-    context = canvas.getContext('2d');
-    context.lineWidth = lineWidth;
-    if(composite == null)
+    //context = canvas.getContext('2d');
+    if(composite == "destination-out")
     {
-        console.log("composite is null");
-        context.globalCompositeOperation = "source-over"; 
-        context.lineWidth = lineWidth;
+        if(boxMode){
+            context.lineWidth = 0;
+        }
+        else {
+            context.lineWidth = eraserLineWidth;
+        }
     }
     else
     {
-        context.globalCompositeOperation = "destination-out";
-        context.lineWidth = eraserLineWidth;
+        context.lineWidth = lineWidth;
     }
+    context.globalCompositeOperation = composite;
     context.strokeStyle = lineColor;
     context.lineCap = 'round';
 }

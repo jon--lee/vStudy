@@ -1,3 +1,9 @@
+MAKE SURE THAT THE RESET CONTEXT IS NOW CONSISTENT WITH THE NEW "DESTINATION-OUT" THING BECAUSE THE CLEAR MAY BE CALLED
+WHEN IT IS STILL IN ERASER (BOX) MODE AND THINGS LIKE THAT
+
+
+
+
 //create functionality that checks if the link already exists
 //get the code from the server not the client side (security risk)
 when making the size of the canvas, make it so that the client with the larger one is dominant
