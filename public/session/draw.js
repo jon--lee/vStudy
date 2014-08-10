@@ -1,5 +1,7 @@
-var lineWidth = 4;          //default value
-var eraserLineWidth = 30;
+const DEFAULT_LINE_WIDTH = 4;
+const ERASER_LINE_WIDTH = 30;
+const BOX_LINE_WIDTH = 0;
+var lineWidth = DEFAULT_LINE_WIDTH;          //default value
 var lineColor = '#00000'    //default value
 var boxMode = false;
 const ERASE = "destination-out";  //constant, do not change
@@ -87,17 +89,16 @@ context.lineCap = 'round';
 context.stroke();*/
 
 socket.on('sendPaint', function (drawingJSON){
+    console.log("received draw: " + drawingJSON);
     var drawing = JSON.parse(drawingJSON);
-    context.lineWidth = drawing["lineWidth"];
-    context.strokeStyle = drawing["lineColor"];
-    context.globalCompositeOperation = drawing["composite"];
     context.beginPath();
-    context.moveTo(drawing["startCoords"].x, drawing["startCoords"].y);
-    context.lineTo(drawing["endCoords"].x, drawing["endCoords"].y);
+    context.strokeStyle = drawing["lineColor"];
+    context.lineWidth = drawing["lineWidth"];
+    context.globalCompositeOperation = drawing["composite"];
+    context.moveTo(drawing["startPos"].x, drawing["startPos"].y);
+    context.lineTo(drawing["endPos"].x, drawing["endPos"].y);
     context.stroke();
-    //now manually reset the styles for this peer
     resetContext();
-    
 });
 
 
@@ -112,7 +113,7 @@ canvas.addEventListener('mousemove', mouseMove);
 
 canvas.addEventListener('mouseup', mouseUp);
 
-canvas.addEventListener('mouseout', mouseUp);
+canvas.addEventListener('mouseout', mouseOut);
 
 canvas.addEventListener('mousedown', mouseDown);
 
@@ -124,22 +125,19 @@ function mouseMove(evt)
         context.moveTo(coords.x, coords.y);
         context.lineTo(newCoords.x, newCoords.y);
         context.stroke();
-        //send information to the peer
         var drawing = {
-            "startCoords": coords,
-            "endCoords": newCoords,
-            "lineWidth": lineWidth,
+            "startPos": coords,
+            "endPos": newCoords,
             "lineColor": lineColor,
+            "lineWidth": lineWidth,
             "composite": composite
         };
-        drawingJSON = JSON.stringify(drawing);
-        socket.emit("sendPaint", room, drawingJSON);
+        var drawingJSON = JSON.stringify(drawing);
+        socket.emit("sendPaint", room, drawingJSON)
         coords = newCoords;
-        console.log("this is getting called");
     }
     if(boxMode && isDown && !onSelector)
     {
-        console.log("drawing box");
         //show the box
         $('#cursor').css('display', 'block');
         var newCoords = getMousePos(canvas, evt);
@@ -154,12 +152,15 @@ function mouseMove(evt)
         {
             startPos.y = newCoords.y;
         }
-        console.log(coords.x + " - " + newCoords.x);
-        console.log(coords.y + " - " + newCoords.y);
         var dims = {w: Math.abs(coords.x - newCoords.x), h: Math.abs(coords.y - newCoords.y)};
         $('#cursor').height(dims.h);
         $('#cursor').width(dims.w);
         $('#cursor').css({left: startPos.x + "px", top: startPos.y + "px"});
+    }
+}
+function mouseOut(evt){
+    if(!boxMode){
+        mouseUp(evt);
     }
 }
 function mouseUp(evt)
@@ -187,6 +188,15 @@ function mouseUp(evt)
         context.fillStyle = "rgba(0,0,0,1)";
         context.fill();
         context.stroke();
+        
+        var rect = {
+            "startPos": startPos,
+            "dims": dims,
+            "fill": context.fillStyle,
+            "lineWidth": context.lineWidth,
+            "lineColor": context.strokeStyle,
+            "composite": composite
+        }
     }
 }
 
@@ -198,31 +208,31 @@ function mouseDown(evt)
 
 
 $('#colorList li').click(function(e){
-    console.log("li clicked");
     if($(this).attr("id") == "eraserButton")
     {
         boxMode = false;
         console.log("eraser clicked");
         lineColor = "rgba(0,0,0,1)";
+        lineWidth = ERASER_LINE_WIDTH;
         composite = ERASE;
-        resetContext();
         
     }
     else if($(this).attr("id") == "boxEraserButton")
     {
         boxMode = true;
         lineColor = "rgba(0,0,0,1)";
+        lineWidth = BOX_LINE_WIDTH;
         composite = ERASE;
-        resetContext();
     }
     else
     {
         boxMode = false;
         lineColor = $(this).css("background-color");
+        lineWidth = DEFAULT_LINE_WIDTH;
         composite = DRAW;
         console.log("line color: " + lineColor);
-        resetContext();
     }
+    resetContext();
     togglePencilOptions();
 });
 
@@ -240,21 +250,8 @@ $('#clearButton').click(function(){
 
 function resetContext()
 {
-    
     //context = canvas.getContext('2d');
-    if(composite == "destination-out")
-    {
-        if(boxMode){
-            context.lineWidth = 0;
-        }
-        else {
-            context.lineWidth = eraserLineWidth;
-        }
-    }
-    else
-    {
-        context.lineWidth = lineWidth;
-    }
+    context.lineWidth = lineWidth;
     context.globalCompositeOperation = composite;
     context.strokeStyle = lineColor;
     context.lineCap = 'round';

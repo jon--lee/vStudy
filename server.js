@@ -116,6 +116,7 @@ sessionNSP.on('connection', function (socket){
 
 	});
     socket.on("leaveRoom", function(room){
+        console.log("leave room called");
         socket.leave(room);
         socket.broadcast.to(room).emit("peerLeft", room);
         //delete roomsClient[socket.id];
@@ -123,6 +124,7 @@ sessionNSP.on('connection', function (socket){
         
     });
     socket.on("disconnect", function(){
+        console.log("disconnnect called");
         if(roomsClient[socket.id] != null){
             for (var i = 0; i < roomsClient[socket.id].length; i++)
             {
@@ -135,17 +137,16 @@ sessionNSP.on('connection', function (socket){
         }
     });
     socket.on("sendPaint", function(room, drawingJSON){
+        console.log("server received some paint info");
         socket.broadcast.to(room).emit("sendPaint", drawingJSON);
     });
     socket.on("sendImage", function(room, imageJSON){
         console.log(imageJSON);
     });
     socket.on("pauseRemote", function(room){
-        console.log("from server: telling remote to pause");
         socket.broadcast.to(room).emit("pauseRemote");
     });
     socket.on("playRemote", function(room){
-        console.log("from server: telling remote to pause");
         socket.broadcast.to(room).emit("playRemote");
     });
     
