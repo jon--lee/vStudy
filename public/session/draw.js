@@ -89,8 +89,12 @@ context.lineCap = 'round';
 context.stroke();*/
 
 socket.on('sendPaint', function (drawingJSON){
-    console.log("received draw: " + drawingJSON);
-    var drawing = JSON.parse(drawingJSON);
+    console.log("receiving paint");
+    var temp = JSON.parse(drawingJSON);
+    var drawing = new Line(context, temp["startPos"], temp["endPos"], temp["lineColor"], temp["lineWidth"], temp["composite"]);
+    drawing.drawSelf();
+    resetContext();
+    /*var drawing = JSON.parse(drawingJSON);
     context.beginPath();
     context.strokeStyle = drawing["lineColor"];
     context.lineWidth = drawing["lineWidth"];
@@ -98,7 +102,7 @@ socket.on('sendPaint', function (drawingJSON){
     context.moveTo(drawing["startPos"].x, drawing["startPos"].y);
     context.lineTo(drawing["endPos"].x, drawing["endPos"].y);
     context.stroke();
-    resetContext();
+    resetContext();*/
 });
 
 
@@ -121,7 +125,7 @@ function mouseMove(evt)
 {
     if(isDown && !onSelector && !boxMode){
         var newCoords = getMousePos(canvas, evt);
-        context.beginPath();
+        /*context.beginPath();
         context.moveTo(coords.x, coords.y);
         context.lineTo(newCoords.x, newCoords.y);
         context.stroke();
@@ -132,8 +136,12 @@ function mouseMove(evt)
             "lineWidth": lineWidth,
             "composite": composite
         };
-        var drawingJSON = JSON.stringify(drawing);
-        socket.emit("sendPaint", room, drawingJSON)
+        var drawingJSON = JSON.stringify(drawing);*/
+        var drawing = new Line(context, coords, newCoords, lineColor, lineWidth, composite);
+        drawing.drawSelf();
+        var json = drawing.toJSON();
+        socket.emit("sendPaint", room, json);
+        console.log("sending paint");
         coords = newCoords;
     }
     if(boxMode && isDown && !onSelector)

@@ -117,7 +117,7 @@ sessionNSP.on('connection', function (socket){
 	});
     socket.on("leaveRoom", function(room){
         console.log("leave room called");
-        socket.leave(room);
+        //socket.leave(room);
         socket.broadcast.to(room).emit("peerLeft", room);
         //delete roomsClient[socket.id];
         removeFromRoom(room, socket.id);
@@ -125,7 +125,7 @@ sessionNSP.on('connection', function (socket){
     });
     socket.on("disconnect", function(){
         console.log("disconnnect called");
-        if(roomsClient[socket.id] != null){
+        /*if(roomsClient[socket.id] != null){
             for (var i = 0; i < roomsClient[socket.id].length; i++)
             {
                 room = roomsClient[socket.id][i];
@@ -134,10 +134,10 @@ sessionNSP.on('connection', function (socket){
                 removeFromRoom(room, socket.id);
             }
             delete roomsClient[socket.id];
-        }
+        }*/
     });
     socket.on("sendPaint", function(room, drawingJSON){
-        console.log("server received some paint info");
+        console.log("relaying paint: " + drawingJSON);
         socket.broadcast.to(room).emit("sendPaint", drawingJSON);
     });
     socket.on("sendImage", function(room, imageJSON){
