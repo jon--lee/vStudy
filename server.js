@@ -118,6 +118,7 @@ sessionNSP.on('connection', function (socket){
     socket.on("leaveRoom", function(room){
         console.log("leave room called");
         //socket.leave(room);
+        
         socket.broadcast.to(room).emit("peerLeft", room);
         //delete roomsClient[socket.id];
         removeFromRoom(room, socket.id);
