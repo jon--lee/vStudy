@@ -54,13 +54,35 @@ Line.prototype.toJSON = function(){
 
 
 
-
-
-
-
 //////////////////////////////////////////////
 /////////////////RECT CLASS///////////////////
 //////////////////////////////////////////////
+
+Rect.prototype.setContextColorWidthComposite = Drawing.prototype.setContextColorWidthComposite;
+function Rect(context, startPos, dims, color, width, comp)
+{
+    this.startPos = startPos;
+    this.dims = dims;
+    this.setContextColorWidthComposite(context, color, width, comp);
+}
+
+
+/*Rect.prototype.toJSON = function(){
+    var temp = {
+        "startPos": this.startPos,
+        "dims": this.dims,
+        "lineColor": this.lineColor,
+        "lineWidth": this.lineWidth,
+        "composite": this.composite
+    };
+    return JSON.stringify(temp);
+}*/
+
+
+
+
+
+
 
 
 
