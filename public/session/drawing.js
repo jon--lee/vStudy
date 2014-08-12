@@ -13,6 +13,7 @@ Drawing.prototype.setContextColorWidthComposite = function(context, color, width
     this.composite = comp;
 }
 Drawing.prototype.drawSelf = function(){
+    
 }
 
 
@@ -47,7 +48,8 @@ Line.prototype.toJSON = function(){
         "endPos": this.endPos,
         "lineColor": this.lineColor,
         "lineWidth": this.lineWidth,
-        "composite": this.composite
+        "composite": this.composite,
+        "style": "line"
     };
     return JSON.stringify(temp);
 }
@@ -66,17 +68,30 @@ function Rect(context, startPos, dims, color, width, comp)
     this.setContextColorWidthComposite(context, color, width, comp);
 }
 
+Rect.prototype.drawSelf = function(){
+    console.log("rect drawing self");
+    context.fillStyle = this.lineColor;
+    context.strokeStyle = this.lineColor;
+    context.lineWidth = this.lineWidth;
+    context.globalCompositeOperation = this.composite;
+    context.beginPath();
+    context.rect(this.startPos.x, this.startPos.y, this.dims.w, this.dims.h);
+    context.fill();
+    context.stroke();
+}
 
-/*Rect.prototype.toJSON = function(){
+Rect.prototype.toJSON = function(){
     var temp = {
         "startPos": this.startPos,
         "dims": this.dims,
         "lineColor": this.lineColor,
-        "lineWidth": this.lineWidth,
-        "composite": this.composite
+        "lineWidth": this.width,
+        "composite": this.composite,
+        "style": "rect"
     };
     return JSON.stringify(temp);
-}*/
+}
+
 
 
 

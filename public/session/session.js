@@ -10,7 +10,7 @@ $( document ).ready(function() {
     }
     else
     {
-        $("#mobilePopup").fadeIn(800);
+        //$("#mobilePopup").fadeIn(800);
     }
 
     //regardless of what is happening, reset the cookie (because old use may be going to new session
@@ -34,7 +34,7 @@ function configureInstructions(){
 
 $('#instructionOverlay, #closePopupButton').click(function(){
     hidePopup(); 
-    $("#mobilePopup").fadeIn(800);
+    //$("#mobilePopup").fadeIn(800);
 });
 
 function hidePopup(obj){

@@ -92,7 +92,15 @@ context.stroke();*/
 socket.on('sendPaint', function (drawingJSON){
     console.log("receiving paint");
     var temp = JSON.parse(drawingJSON);
-    var drawing = new Line(context, temp["startPos"], temp["endPos"], temp["lineColor"], temp["lineWidth"], temp["composite"]);
+    var drawing;
+    if(temp["style"] == "line")
+    {    
+        drawing = new Line(context, temp["startPos"], temp["endPos"], temp["lineColor"], temp["lineWidth"], temp["composite"]);
+    }
+    else if(temp["style"] == "rect")
+    {
+        drawing = new Rect(context, temp["startPos"], temp["dims"], temp["lineColor"], temp["lineWidth"], temp["composite"]);
+    }
     drawing.drawSelf();
     resetContext();
     /*var drawing = JSON.parse(drawingJSON);
@@ -141,6 +149,7 @@ function mouseMove(evt)
         var drawing = new Line(context, coords, newCoords, lineColor, lineWidth, composite);
         drawing.drawSelf();
         var json = drawing.toJSON();
+        console.log(JSON.stringify(drawing));
         socket.emit("sendPaint", room, json);
         console.log("sending paint");
         coords = newCoords;
@@ -192,20 +201,15 @@ function mouseUp(evt)
             startPos.y = newCoords.y;
         }
         var dims = {w: Math.abs(coords.x - newCoords.x), h: Math.abs(coords.y - newCoords.y)};
-        context.beginPath();
+        /*context.beginPath();
         context.rect(startPos.x, startPos.y, dims.w, dims.h);
         context.fillStyle = "rgba(0,0,0,1)";
         context.fill();
-        context.stroke();
-        
-        var rect = {
-            "startPos": startPos,
-            "dims": dims,
-            "fill": context.fillStyle,
-            "lineWidth": context.lineWidth,
-            "lineColor": context.strokeStyle,
-            "composite": composite
-        }
+        context.stroke();*/
+        var rect = new Rect(context, startPos, dims, lineColor, 0, composite);
+        rect.drawSelf();
+        var json = rect.toJSON();
+        socket.emit("sendPaint", room, json);
     }
 }
 
