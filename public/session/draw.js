@@ -81,6 +81,7 @@ canvas.height = canvasContent.height();
 
 var context = canvas.getContext("2d");
 resetContext();
+
 /*context.beginPath();
 context.moveTo(100, 150);
 context.lineTo(450, 50);
@@ -215,7 +216,8 @@ function mouseDown(evt)
 }
 
 
-$('#colorList li').click(function(e){
+$('#colorList li').on("click", function(e){
+    console.log("LIST ITEM CLICKED");
     if($(this).attr("id") == "eraserButton")
     {
         boxMode = false;
@@ -256,12 +258,16 @@ $('#clearButton').click(function(){
     hideImages();
 });
 
+$( "#black" ).trigger( "click" );
+togglePencilOptions();
+
 function resetContext()
 {
     //context = canvas.getContext('2d');
+    context.strokeStyle = lineColor;
+    console.log("RESETTING strokestyle: " + context.strokeStyle + " and color: " + lineColor);
     context.lineWidth = lineWidth;
     context.globalCompositeOperation = composite;
-    context.strokeStyle = lineColor;
     context.lineCap = 'round';
 }
 //images are merely hidden from the view, should inquire whether or not this affects performance to have stagnant "images" still on the page.
