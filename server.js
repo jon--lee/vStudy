@@ -115,12 +115,10 @@ sessionNSP.on('connection', function (socket){
         
         //create logs if non-existant
         if(sessionLogs[room] == null){
-            console.log("creating new log because other doesn't exist");
             sessionLogs[room] = new Log(room);
         }
         else    //load the logs as they do exist already
         {
-            console.log("not creating new log because apparently exists");
             var actions = sessionLogs[room].getActions();
             for (var i = 0; i < actions.length; i++){
                 socket.emit("sendAction", actions[i]);

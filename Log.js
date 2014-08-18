@@ -17,15 +17,3 @@ Log.prototype.addAction = function(action){
 
 module.exports = Log;
 
-
-/*var actions = [];
-
-
-exports.addAction = function(temp){
-    actions.push(temp);
-};
-
-
-exports.getActions = function(){
-    return actions;
-};*/
