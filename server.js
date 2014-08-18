@@ -3,6 +3,7 @@ var app = express();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
 var uuid = require('node-uuid');
+var Log = require('./Log.js');
 
 
 /* handling the page loading */
@@ -71,7 +72,7 @@ function makeid()
 var sessionNSP = io.of("/session");
 
 var roomsClient = {};
-var sessionsLogs = {};
+var sessionLogs = {};
 var sessionsImages = {};
 
 
@@ -111,6 +112,24 @@ sessionNSP.on('connection', function (socket){
 		} else { // max two clients
 			socket.emit('full', room);
 		}
+        
+        //create logs if non-existant
+        if(sessionLogs[room] == null){
+            console.log("creating new log because other doesn't exist");
+            sessionLogs[room] = new Log(room);
+        }
+        else    //load the logs as they do exist already
+        {
+            console.log("not creating new log because apparently exists");
+            var actions = sessionLogs[room].getActions();
+            for (var i = 0; i < actions.length; i++){
+                socket.emit("sendAction", actions[i]);
+            }
+        }
+        
+        
+        
+        
 		socket.emit('emit(): client ' + socket.id + ' joined room ' + room);
 		socket.broadcast.emit('broadcast(): client ' + socket.id + ' joined room ' + room);
 
@@ -137,10 +156,14 @@ sessionNSP.on('connection', function (socket){
             delete roomsClient[socket.id];
         }*/
     });
+    
+    //should log this
     socket.on("sendPaint", function(room, drawingJSON){
-        console.log("relaying paint: " + drawingJSON);
-        socket.broadcast.to(room).emit("sendPaint", drawingJSON);
+        sessionLogs[room].addAction(drawingJSON);
+        socket.broadcast.to(room).emit("sendAction", drawingJSON);
     });
+    
+    //should log this
     socket.on("sendImage", function(room, imageJSON){
         console.log(imageJSON);
     });

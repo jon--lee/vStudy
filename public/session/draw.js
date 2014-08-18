@@ -89,7 +89,8 @@ context.lineWidth = defaultLineWidth;
 context.lineCap = 'round';
 context.stroke();*/
 
-socket.on('sendPaint', function (drawingJSON){
+
+socket.on('sendAction', function (drawingJSON){
     console.log("receiving paint");
     var temp = JSON.parse(drawingJSON);
     var drawing;
