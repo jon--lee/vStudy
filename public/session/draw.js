@@ -67,11 +67,7 @@ function getMousePos(canvas, evt) {
 
 var isDown = false;
 var coords = {x: -1, y: -1};
-var canvas = document.getElementById('canvas');
-canvasContent = $('#canvasContent');
-var imageContainer = $('#imageContainer');
-canvas.width = canvasContent.width();
-canvas.height = canvasContent.height();
+
 //imageContainer.css("width", canvasContent.width() + "px");
 //imageContainer.css("height", canvasContent.height() + "px");
 /*$(window).resize(function(){
@@ -89,6 +85,15 @@ context.lineWidth = defaultLineWidth;
 context.lineCap = 'round';
 context.stroke();*/
 
+socket.on("test", function(){
+    console.log("received some test from server");
+});
+
+socket.on("updateDims", function(dims){
+    canvas.width = dims.w;
+    canvas.height = dims.h;
+    contenxt = canvas.getContext("2d");
+});
 
 socket.on('sendAction', function (drawingJSON){
     console.log("receiving paint");

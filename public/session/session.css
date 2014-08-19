@@ -366,6 +366,8 @@ video
     cursor:default;
     height:100%;
     width:100%;
+    min-height:700px;
+    min-width:1200px;
 }
 
 #canvasContent div

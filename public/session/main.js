@@ -1,4 +1,8 @@
-
+var canvas = document.getElementById('canvas');
+canvasContent = $('#canvasContent');
+var imageContainer = $('#imageContainer');
+canvas.width = canvasContent.width();
+canvas.height = canvasContent.height();
 
 
 
@@ -54,10 +58,10 @@ if (room === '') {
 
 //var socket = io.connect();
 //var socket = io("/session");
-
+var dims = {w: canvas.width, h: canvas.height};
 if (room !== '') {
   //console.log('Create or join room', room);
-  socket.emit('create or join', room);
+  socket.emit('create or join', room, dims);
 }
 
 socket.on('created', function (room){

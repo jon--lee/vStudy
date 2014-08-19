@@ -2,20 +2,18 @@ $( document ).ready(function() {
     var gotThisUserMedia = false;
     var cookie = readCookie("sc");
                             //THIS IS HERE FOR TESTING AND SHOULD BE PUT IN THE IF(COOKIE==NULL) SECTION FOR PRODUCTION
-    if(cookie == null)
+    var newCode = location.pathname.substring(1, location.pathname.length - 1);
+    if(cookie == null || newCode != cookie)
     {
         //display the popup
         showPopup($(".instruction"));
         configureInstructions();
     }
-    else
-    {
-        //$("#mobilePopup").fadeIn(800);
-    }
+    
 
     //regardless of what is happening, reset the cookie (because old use may be going to new session
-    var code = location.pathname.substring(1, location.pathname.length - 1);
-    createCookie("sc", code);
+    //var code = location.pathname.substring(1, location.pathname.length - 1);
+    createCookie("sc", newCode, 1);
 });
 
 

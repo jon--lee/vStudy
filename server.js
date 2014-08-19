@@ -72,6 +72,17 @@ function makeid()
 var sessionNSP = io.of("/session");
 
 var roomsClient = {};
+
+sessionsData = {};
+
+//each session will look like this
+/*
+sessions[room] = {
+    dims: {x: 100, y: 100},
+    log: new Log(room)
+}
+*/
+
 var sessionLogs = {};
 var sessionsImages = {};
 
@@ -94,9 +105,9 @@ sessionNSP.on('connection', function (socket){
 		socket.broadcast.emit('message', message);
 	});
 
-	socket.on('create or join', function (room) {
+	socket.on('create or join', function (room, localDims) {
 		var numClients = getNumClients(room);
-        
+        console.log("got dims -- h: " + localDims.h + " and w: " + localDims.w);
 		//log('Room ' + room + ' has ' + numClients + ' client(s)');
 		//log('Request to create or join room', room);
 		if (numClients == 0){
@@ -110,18 +121,31 @@ sessionNSP.on('connection', function (socket){
             roomsClient[socket.id].push(room);
 			socket.emit('joined', room);
 		} else { // max two clients
+            socket.join(room);
 			socket.emit('full', room);
 		}
         
         //create logs if non-existant
-        if(sessionLogs[room] == null){
-            sessionLogs[room] = new Log(room);
+        if(sessionsData[room] == null){
+            sessionsData[room] = {dims: localDims, log: new Log(room)};
         }
         else    //load the logs as they do exist already
         {
-            var actions = sessionLogs[room].getActions();
+            var actions = sessionsData[room].log.getActions();
+            var modifiedDims = {w: localDims.w, h: localDims.h};
+            if(sessionsData[room].dims.w > modifiedDims.w)
+            {
+                modifiedDims.w = sessionsData[room].dims.w;
+            }
+            if(sessionsData[room].dims.h > modifiedDims.h)
+            {
+                modifiedDims.h = sessionsData[room].dims.h;
+            }
+            //sending paint actions
+            socket.nsp.to(room).emit("updateDims", modifiedDims);
             for (var i = 0; i < actions.length; i++){
-                socket.emit("sendAction", actions[i]);
+                //socket.emit("sendAction", actions[i]);
+                socket.nsp.to(room).emit("sendAction", actions[i]);
             }
         }
         
@@ -157,7 +181,7 @@ sessionNSP.on('connection', function (socket){
     
     //should log this
     socket.on("sendPaint", function(room, drawingJSON){
-        sessionLogs[room].addAction(drawingJSON);
+        sessionsData[room].log.addAction(drawingJSON);
         socket.broadcast.to(room).emit("sendAction", drawingJSON);
     });
     
