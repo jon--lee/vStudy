@@ -189,6 +189,11 @@ sessionNSP.on('connection', function (socket){
     socket.on("sendImage", function(room, imageJSON){
         console.log(imageJSON);
     });
+    
+    socket.on("clearLogs", function(room){
+        sessionsData[room].log.clear();
+    });
+    
     socket.on("pauseRemote", function(room){
         socket.broadcast.to(room).emit("pauseRemote");
     });

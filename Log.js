@@ -15,5 +15,9 @@ Log.prototype.addAction = function(action){
     this.actions.push(action);
 }
 
+Log.prototype.clear = function(){
+    this.actions = [];
+}
+
 module.exports = Log;
 

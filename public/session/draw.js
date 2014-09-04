@@ -263,6 +263,17 @@ $('#colorList li').on("click", function(e){
 //must also reset the context stuff
 
 $('#clearButton').click(function(){
+    console.log("clear pressed");
+    showPopup($('#clearConfirmPopup'));
+});
+
+$('#clearConfirmPopup button').click(function(){
+    hidePopup($('#clearConfirmPopup'));
+});
+
+$('#clearConfirmButton').click(function(){
+    //clear logs
+    socket.emit("clearLogs", room);
     canvas.width = canvas.width;
     resetContext();
     hideImages();
