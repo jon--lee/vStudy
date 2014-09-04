@@ -17,12 +17,12 @@ function setImageUI()
     $('.image').resizable({
     containment: "#imageContainer",
     start: function(event, ui){
-        console.log("started resizing");
+        //console.log("started resizing");
         maxSelectorIndex++;
         $(this).parent().css("z-index", maxSelectorIndex.toString());
     },
     stop: function(event, ui){
-        console.log("stopped resizing");    //should send info via websocket now
+        //console.log("stopped resizing");    //should send info via websocket now
         sendImage($(this));
     }
 });
@@ -30,12 +30,12 @@ function setImageUI()
 $('.draggableHelper').draggable({
     containment: '#imageContainer',
     start: function(){
-        console.log("Start dragging");
+        //console.log("Start dragging");
         maxSelectorIndex++;
         $(this).css("z-index", maxSelectorIndex.toString());
     },
     stop: function(){
-        console.log("stop dragging");       //should send info via websocket now
+        //console.log("stop dragging");       //should send info via websocket now
         sendImage($(this));
     }
 });
@@ -86,7 +86,7 @@ context.lineCap = 'round';
 context.stroke();*/
 
 socket.on("test", function(){
-    console.log("received some test from server");
+    //console.log("received some test from server");
 });
 
 socket.on("updateDims", function(dims){
@@ -96,7 +96,7 @@ socket.on("updateDims", function(dims){
 });
 
 socket.on('sendAction', function (drawingJSON){
-    console.log("receiving paint");
+    //console.log("receiving paint");
     var temp = JSON.parse(drawingJSON);
     var drawing;
     if(temp["style"] == "line")
@@ -155,9 +155,9 @@ function mouseMove(evt)
         var drawing = new Line(context, coords, newCoords, lineColor, lineWidth, composite);
         drawing.drawSelf();
         var json = drawing.toJSON();
-        console.log(JSON.stringify(drawing));
+        //console.log(JSON.stringify(drawing));
         socket.emit("sendPaint", room, json);
-        console.log("sending paint");
+        //console.log("sending paint");
         coords = newCoords;
     }
     if(boxMode && isDown && !onSelector)
@@ -227,11 +227,11 @@ function mouseDown(evt)
 
 
 $('#colorList li').on("click", function(e){
-    console.log("LIST ITEM CLICKED");
+    //console.log("LIST ITEM CLICKED");
     if($(this).attr("id") == "eraserButton")
     {
         boxMode = false;
-        console.log("eraser clicked");
+        //console.log("eraser clicked");
         lineColor = "rgba(0,0,0,1)";
         lineWidth = ERASER_LINE_WIDTH;
         composite = ERASE;
@@ -250,7 +250,7 @@ $('#colorList li').on("click", function(e){
         lineColor = $(this).css("background-color");
         lineWidth = DEFAULT_LINE_WIDTH;
         composite = DRAW;
-        console.log("line color: " + lineColor);
+        //console.log("line color: " + lineColor);
     }
     resetContext();
     togglePencilOptions();
@@ -263,7 +263,7 @@ $('#colorList li').on("click", function(e){
 //must also reset the context stuff
 
 $('#clearButton').click(function(){
-    console.log("clear pressed");
+    //console.log("clear pressed");
     showPopup($('#clearConfirmPopup'));
 });
 
@@ -286,7 +286,7 @@ function resetContext()
 {
     //context = canvas.getContext('2d');
     context.strokeStyle = lineColor;
-    console.log("RESETTING strokestyle: " + context.strokeStyle + " and color: " + lineColor);
+    //console.log("RESETTING strokestyle: " + context.strokeStyle + " and color: " + lineColor);
     context.lineWidth = lineWidth;
     context.globalCompositeOperation = composite;
     context.lineCap = 'round';

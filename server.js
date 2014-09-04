@@ -16,9 +16,7 @@ app.get('/session/', function(req, res){
     res.sendfile('public/about/index.html');
 });
 
-app.get('/testing/', function(req, res){
-    res.sendfile('public/session/index.html');
-});
+
 
 app.use(express.static(__dirname + '/public'));
 

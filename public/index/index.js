@@ -1,9 +1,9 @@
 var cookie = readCookie("sc"); //cookies name for session id should always be "sc" //
 if(cookie != null)
 {
-    console.log("value: " + cookie);
+    //console.log("value: " + cookie);
     $("#restore").css("display", "block");
-    $("#signUpSection").css("height", "420px");
+    //$("#signUpSection").css("height", "150px");
     $("#restore a").attr("href", cookie + "/");
 }
 /*else

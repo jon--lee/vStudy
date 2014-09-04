@@ -8,7 +8,7 @@ function Drawing(context, color, width, comp)
 Drawing.prototype.setContextColorWidthComposite = function(context, color, width, comp){
     this.context = context;
     this.lineColor = color;
-    console.log("setting color: " + this.lineColor);
+    //console.log("setting color: " + this.lineColor);
     this.lineWidth = width;
     this.composite = comp;
 }
@@ -35,7 +35,7 @@ Line.prototype.drawSelf = function(){
     context.lineWidth = this.lineWidth;
     context.globalCompositeOperation = this.composite;
     context.strokeStyle = this.lineColor;
-    console.log("strokestyle: " + context.strokeStyle + " and color: " + this.lineColor);
+    //console.log("strokestyle: " + context.strokeStyle + " and color: " + this.lineColor);
     context.beginPath();
     context.moveTo(this.startPos.x, this.startPos.y);
     context.lineTo(this.endPos.x, this.endPos.y);
@@ -69,7 +69,7 @@ function Rect(context, startPos, dims, color, width, comp)
 }
 
 Rect.prototype.drawSelf = function(){
-    console.log("rect drawing self");
+    //console.log("rect drawing self");
     context.fillStyle = this.lineColor;
     context.strokeStyle = this.lineColor;
     context.lineWidth = this.lineWidth;

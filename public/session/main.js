@@ -65,34 +65,34 @@ if (room !== '') {
 }
 
 socket.on('created', function (room){
-  console.log('Created room ' + room);
+  //console.log('Created room ' + room);
   isInitiator = true;
 });
 
 //deconstruct the page and warn that it is full
 socket.on('full', function (room){
-  console.log('Room ' + room + ' is full');
+  //console.log('Room ' + room + ' is full');
 });
 
 socket.on('join', function (room){
-  console.log('Another peer made a request to join room ' + room);
-  console.log('This peer is the initiator of room ' + room + '!');
+  //console.log('Another peer made a request to join room ' + room);
+  //console.log('This peer is the initiator of room ' + room + '!');
   //isChannelReady = true;
 });
 
 socket.on('joined', function (room){
-  console.log('This peer has joined room ' + room);
+  //console.log('This peer has joined room ' + room);
   //isChannelReady = true;
 });
 
 socket.on('peerLeft', function(room){
-    console.log("your peer left the room");
+    //console.log("your peer left the room");
     //isChannelReady = false;
     isInitiator = true;
     hangup();
 });
 socket.on('log', function (array){
-  console.log.apply(console, array);
+  //console.log.apply(console, array);
 });
 
 ////////////////////////////////////////////////
@@ -415,24 +415,24 @@ $('#localVideo, #localVideoOverlay').click(function(){
     {
         if(isChannelReady){  
             play(loc, $('#localVideoOverlay'));
-            console.log("telling the remote user to play!");
+            //console.log("telling the remote user to play!");
             socket.emit("playRemote", room);
         }
     }
     else
     {
         pause(loc, $('#localVideoOverlay'));
-        console.log("telling the remote user to pause");
+        //console.log("telling the remote user to pause");
         socket.emit("pauseRemote", room);
     }
 });
 
 socket.on("pauseRemote", function (){
-    console.log("got it, should be pausing remote");
+    //console.log("got it, should be pausing remote");
     pause($('#remoteVideo'), $('#remoteVideoOverlay'));
 });
 socket.on("playRemote", function(){
-    console.log("got it should be playing now");
+    //console.log("got it should be playing now");
     play($('#remoteVideo'), $('#remoteVideoOverlay'));
 });
 
@@ -480,7 +480,7 @@ function makeImage(){
     }).css("display", "inline-block").css("z-index", maxSelectorIndex.toString());
     var img = $('<img>');
     img.attr('src', snapshot.toDataURL("image/png"));
-    console.log(snapshot.toDataURL("image/png"));
+    //console.log(snapshot.toDataURL("image/png"));
     img.attr('class', 'image ui-widget-content');
     img.appendTo(div);
     div.appendTo($('#imageContainer'));
