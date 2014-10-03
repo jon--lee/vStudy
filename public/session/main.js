@@ -481,6 +481,9 @@ function makeImage(){
     var img = $('<img>');
     img.attr('src', snapshot.toDataURL("image/png"));
     //console.log(snapshot.toDataURL("image/png"));
+    //now send the image src to the other users for them to make as well
+    
+    //end sending image src data
     img.attr('class', 'image ui-widget-content');
     img.appendTo(div);
     div.appendTo($('#imageContainer'));
