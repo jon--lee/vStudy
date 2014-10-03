@@ -190,6 +190,13 @@ sessionNSP.on('connection', function (socket){
         console.log(imageJSON);
     });
     
+    //production marked
+    socket.on("sendImageURL", function(room, url){
+        console.log(url);
+        socket.broadcast.to(room).emit("sendImageURL", url);
+    })
+    //production marked
+    
     socket.on("clearLogs", function(room){
         sessionsData[room].log.clear();
     });
