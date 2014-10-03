@@ -188,6 +188,10 @@ sessionNSP.on('connection', function (socket){
         console.log(imageJSON);
     });
     
+    socket.on("sendImageURL", function(room, url){
+        socket.broadcast.to(room).emit("sendImageURL", url);
+    });
+    
     socket.on("clearLogs", function(room){
         sessionsData[room].log.clear();
     });

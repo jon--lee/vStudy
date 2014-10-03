@@ -16,7 +16,14 @@ $( document ).ready(function() {
     createCookie("sc", newCode, 1);
 });
 
-
+function makeid()
+{
+    var text = "";
+    var possible = "abcdefghijklmnopqrstuvwxyz0123456789";
+    for( var i=0; i < 15; i++ )
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+    return text;
+}
 
 function showPopup(obj){
     obj.fadeIn();

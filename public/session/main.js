@@ -474,22 +474,31 @@ function makeImage(){
     c.fillRect(0, 0, snapshot.width, snapshot.height);
     c.drawImage(locVid, 0, 0, snapshot.width, snapshot.height);
     
+    iurl = snapshot.toDataURL("image/png");
+    makeImageHelper(iurl);
+    socket.emit("sendImageURL", room, iurl);
+    
+    
+}
+
+socket.on("sendImageURL", function(url){
+    makeImageHelper(url);
+    
+});
+
+function makeImageHelper(url)
+{
     maxSelectorIndex++;
     var div = $("<div>", {
         class: 'draggableHelper',
     }).css("display", "inline-block").css("z-index", maxSelectorIndex.toString());
     var img = $('<img>');
-    img.attr('src', snapshot.toDataURL("image/png"));
-    //console.log(snapshot.toDataURL("image/png"));
-    //now send the image src to the other users for them to make as well
-    
-    //end sending image src data
+    img.attr('src', url);
     img.attr('class', 'image ui-widget-content');
     img.appendTo(div);
     div.appendTo($('#imageContainer'));
     
     setImageUI();
-    
 }
 
 //minimize the video by hiding it and showing the "open video" button
