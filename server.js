@@ -105,7 +105,7 @@ sessionNSP.on('connection', function (socket){
 
 	socket.on('create or join', function (room, localDims) {
 		var numClients = getNumClients(room);
-        console.log("got dims -- h: " + localDims.h + " and w: " + localDims.w);
+        //console.log("got dims -- h: " + localDims.h + " and w: " + localDims.w);
 		//log('Room ' + room + ' has ' + numClients + ' client(s)');
 		//log('Request to create or join room', room);
 		if (numClients == 0){
@@ -141,9 +141,9 @@ sessionNSP.on('connection', function (socket){
             }
             //sending paint actions
             socket.nsp.to(room).emit("updateDims", modifiedDims);
-            for (var i = 0; i < actions.length; i++){
-                //socket.emit("sendAction", actions[i]);
-                socket.nsp.to(room).emit("sendAction", actions[i]);
+            for (var i = 0; i < actions.length; i++){    
+                    //socket.emit("sendAction", actions[i]);    // this is not used because the canvas size is updated so everyone must have new stuff
+                    socket.nsp.to(room).emit("sendAction", actions[i]);
             }
         }
         
@@ -185,11 +185,17 @@ sessionNSP.on('connection', function (socket){
     
     //should log this
     socket.on("sendImage", function(room, imageJSON){
-        console.log(imageJSON);
+        //console.log(imageJSON);
     });
     
     
     socket.on("sendImageURL", function(room, url, id){
+        var action = {
+            "url": url,
+            "id": id,
+            "style": "newImage"
+        }
+        sessionsData[room].log.addAction(JSON.stringify(action));
         socket.broadcast.to(room).emit("sendImageURL", url, id);
     });
     
@@ -200,9 +206,9 @@ sessionNSP.on('connection', function (socket){
             "y": y,
             "w": w,
             "h": h,
-            "style": 
+            "style": "image"
         }
-        
+        sessionsData[room].log.addAction(JSON.stringify(action));
         socket.broadcast.to(room).emit("sendImageCoordsDims", id, x, y, w, h);
     });
     

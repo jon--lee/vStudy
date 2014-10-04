@@ -114,14 +114,17 @@ socket.on("test", function(){
 });
 
 socket.on("updateDims", function(dims){
+    hideImages();
     canvas.width = dims.w;
     canvas.height = dims.h;
     contenxt = canvas.getContext("2d");
+    
 });
 
 socket.on('sendAction', function (json){
     //console.log("receiving paint");
     var temp = JSON.parse(json);
+    console.log(temp["style"]);
     var drawing;
     if(temp["style"] == "line")
     {    
@@ -133,19 +136,17 @@ socket.on('sendAction', function (json){
         drawing = new Rect(context, temp["startPos"], temp["dims"], temp["lineColor"], temp["lineWidth"], temp["composite"]);
         drawing.drawSelf();
     }
-    /*else if(temp["style"] == "newImage")
+    else if(temp["style"] == "newImage")
     {
         //create a new image with info
         makeImageHelper(temp["url"], temp["id"]);
-        var img = $("#" + temp["id"]);
-        setImageCoordsDims(img, temp["x"], temp["y"], temp["w"], temp["h"]);
     }
     else if(temp["style"] == "image")
     {
         //edit the images dims and coords
         var img = $("#" + temp["id"]);
         setImageCoordsDims(img, temp["x"], temp["y"], temp["w"], temp["h"]);
-    }*/
+    }
     resetContext();
     /*var drawing = JSON.parse(drawingJSON);
     context.beginPath();
@@ -333,6 +334,8 @@ function resetContext()
 function hideImages()
 {
     $('#imageContainer div').hide(0);
+    $('#imageContainer img').attr("id", "dead");
+    
 }
 
 
