@@ -112,7 +112,6 @@ Rect.prototype.toJSON = function(){
 
 
 
-
 /*function Drawing(lineColor, lineWidth, composite)
 {
     this.lineColor = lineColor;

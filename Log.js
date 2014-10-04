@@ -4,7 +4,8 @@ function Log(roomId){
 }
 
 Log.prototype.getId = function(){
-    return this.id;
+    //return this.id;
+    return this.roomId
 }
 
 Log.prototype.getActions = function(){

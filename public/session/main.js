@@ -474,19 +474,20 @@ function makeImage(){
     c.fillRect(0, 0, snapshot.width, snapshot.height);
     c.drawImage(locVid, 0, 0, snapshot.width, snapshot.height);
     
-    iurl = snapshot.toDataURL("image/png");
-    makeImageHelper(iurl);
-    socket.emit("sendImageURL", room, iurl);
+    var iurl = snapshot.toDataURL("image/png");
+    var madeid = makeid();
+    makeImageHelper(iurl, madeid);
+    socket.emit("sendImageURL", room, iurl, madeid);
     
     
 }
 
-socket.on("sendImageURL", function(url){
-    makeImageHelper(url);
+socket.on("sendImageURL", function(url, id){
+    makeImageHelper(url, id);
     
 });
 
-function makeImageHelper(url)
+function makeImageHelper(url, madeid)
 {
     maxSelectorIndex++;
     var div = $("<div>", {
@@ -494,6 +495,12 @@ function makeImageHelper(url)
     }).css("display", "inline-block").css("z-index", maxSelectorIndex.toString());
     var img = $('<img>');
     img.attr('src', url);
+    if(madeid == null)
+    {
+        madeid = makeid();
+    }
+    img.attr('id', madeid);
+    
     img.attr('class', 'image ui-widget-content');
     img.appendTo(div);
     div.appendTo($('#imageContainer'));

@@ -22,8 +22,8 @@ function setImageUI()
         $(this).parent().css("z-index", maxSelectorIndex.toString());
     },
     stop: function(event, ui){
-        //console.log("stopped resizing");    //should send info via websocket now
-        sendImage($(this));
+        console.log("stopped resizing");    //should send info via websocket now
+        sendImageCoordsDims($("img", this));
     }
 });
 
@@ -35,27 +35,51 @@ $('.draggableHelper').draggable({
         $(this).css("z-index", maxSelectorIndex.toString());
     },
     stop: function(){
-        //console.log("stop dragging");       //should send info via websocket now
-        sendImage($(this));
+        console.log("stop dragging");       //should send info via websocket now
+        sendImageCoordsDims($("img", this));
     }
 });
 }
 
 
 
-function sendImage(imageElement)
+function sendImageCoordsDims(img)
 {
-    var image = new Image();
-    image.setImage(imageElement);
-    socket.emit("sendImage", room, JSON.stringify(image));
+    helper = img.parent().parent();
+    id = img.attr("id");
+    x = helper.css("left");
+    y = helper.css("top");
+    w = img.css("width");
+    h = img.css("height");
+    console.log("sending: " + id);
+    socket.emit("sendImageCoordsDims", room, id, x, y, w, h);
+}
+
+socket.on("sendImageCoordsDims", function(id, x, y, w, h){
+    console.log("receiving: " + id);
+    img = $("#" + id);
+    setImageCoordsDims(img, x, y, w, h);
+});
+
+function setImageCoordsDims(img, x, y, w, h)
+{
+    helper = img.parent().parent();
+    helper.css("left", x);
+    helper.css("top", y);
+    obj = img;
+    for (i = 0; i < 3; i++){
+        obj.css("width", w);
+        obj.css("height", h);
+        obj = obj.parent();
+    }
 }
 
 
 //http://jqueryui.com/draggable/#events for reading stops and starts and drags
 //recommend that when sending info via websocket, only send the stops, or else too much info would jam up the channel
 
-//consider a delay when the user is drawing before sending the info to the other user as there may be lag when continuously sending information.
-
+//*consider a delay when the user is drawing before sending the info to the other user as there may be lag when continuously sending information.
+//experiments proved the lag to be negligible.
 
 function getMousePos(canvas, evt) {
     var rect = canvas.getBoundingClientRect();
@@ -95,19 +119,33 @@ socket.on("updateDims", function(dims){
     contenxt = canvas.getContext("2d");
 });
 
-socket.on('sendAction', function (drawingJSON){
+socket.on('sendAction', function (json){
     //console.log("receiving paint");
-    var temp = JSON.parse(drawingJSON);
+    var temp = JSON.parse(json);
     var drawing;
     if(temp["style"] == "line")
     {    
         drawing = new Line(context, temp["startPos"], temp["endPos"], temp["lineColor"], temp["lineWidth"], temp["composite"]);
+        drawing.drawSelf();
     }
     else if(temp["style"] == "rect")
     {
         drawing = new Rect(context, temp["startPos"], temp["dims"], temp["lineColor"], temp["lineWidth"], temp["composite"]);
+        drawing.drawSelf();
     }
-    drawing.drawSelf();
+    /*else if(temp["style"] == "newImage")
+    {
+        //create a new image with info
+        makeImageHelper(temp["url"], temp["id"]);
+        var img = $("#" + temp["id"]);
+        setImageCoordsDims(img, temp["x"], temp["y"], temp["w"], temp["h"]);
+    }
+    else if(temp["style"] == "image")
+    {
+        //edit the images dims and coords
+        var img = $("#" + temp["id"]);
+        setImageCoordsDims(img, temp["x"], temp["y"], temp["w"], temp["h"]);
+    }*/
     resetContext();
     /*var drawing = JSON.parse(drawingJSON);
     context.beginPath();

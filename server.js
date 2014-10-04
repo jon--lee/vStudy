@@ -188,8 +188,22 @@ sessionNSP.on('connection', function (socket){
         console.log(imageJSON);
     });
     
-    socket.on("sendImageURL", function(room, url){
-        socket.broadcast.to(room).emit("sendImageURL", url);
+    
+    socket.on("sendImageURL", function(room, url, id){
+        socket.broadcast.to(room).emit("sendImageURL", url, id);
+    });
+    
+    socket.on("sendImageCoordsDims", function(room, id, x, y, w, h){
+        var action = {
+            "id": id,
+            "x": x,
+            "y": y,
+            "w": w,
+            "h": h,
+            "style": 
+        }
+        
+        socket.broadcast.to(room).emit("sendImageCoordsDims", id, x, y, w, h);
     });
     
     socket.on("clearLogs", function(room){
