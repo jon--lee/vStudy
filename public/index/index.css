@@ -87,7 +87,10 @@ a
     height: 200px;         /*height and width are the same as the banner height, same with border-radius */
     background:#F1F1F1;
     margin: auto;
-    padding:10px;
+    padding-top:30px;
+    padding-bottom:20px;
+    padding-left:40px;
+    padding-right:40px;
     border-radius:10px;
     opacity:.90;
     
@@ -102,12 +105,12 @@ a
 
 #signUpSection input {
     outline:none;
-    height:50px;
-    width: 350px;
+    height:75px;
+    width: 400px;
     border:0px;
     padding-left:10px;
     padding-right:10px;
-    font-size:14px;
+    font-size:18px;
 }
 
 
@@ -120,7 +123,7 @@ a
     border-bottom-right-radius:3px;
     color:white;
     height:50px;
-    width:370px;
+    width:420px;
     font-size:20px;
     font-weight:normal;
     cursor:pointer;

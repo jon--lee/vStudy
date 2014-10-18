@@ -6,7 +6,24 @@ var uuid = require('node-uuid');
 var Log = require('./Log.js');
 
 
+function arrayContains(haystack, needle)
+{
+    var r = false;
+    console.log(JSON.stringify(haystack));
+    for (var i = 0; i < haystack.length; i++)
+    {
+        console.log("comparing: " + haystack[i] + " with: " + needle);
+        if(haystack[i] == needle)
+        {
+            r = true;
+        }
+    }
+    return r;
+}
+
 /* handling the page loading */
+//list of all the sessions by their id codes
+sessions = [];
 
 app.get('/', function(req, res){
     res.sendfile('public/index/index.html');
@@ -16,17 +33,44 @@ app.get('/session/', function(req, res){
     res.sendfile('public/about/index.html');
 });
 
-
+app.get('/:id/', function(req, res, next){
+    if(arrayContains(sessions, req.params.id) == true)
+    {
+        console.log("it contains!");
+        res.sendfile('public/session/index.html');
+    }
+    else
+    {
+        console.log("it does not contain! boo...");
+        var err = new Error();
+        err.status = 404;
+        next(err);    
+    }
+});
 
 app.use(express.static(__dirname + '/public'));
 
 http.listen(process.env.PORT ||3000, function(){
     console.log('hey, listening on ' + process.env.PORT);
 });
-/* end handling the page loading */
 
-//list of all the sessions by their id codes
-sessions = [];
+
+app.get('*', function(req, res, next) {
+    var err = new Error();
+    err.status = 404;
+    next(err);
+});
+ 
+// handling 404 errors
+app.use(function(err, req, res, next) {
+    if(err.status !== 404) {
+        return next();
+    }
+ 
+    res.sendfile('public/error/notfound.html');
+});
+
+/* end handling the page loading */
 
 /* handling the index server side */
 var indexNSP = io.of("/index");
@@ -48,9 +92,9 @@ indexNSP.on("connection", function(socket){
     //code should not be a link
     socket.on("createSession", function(code){
         sessions.push(code);
-        app.get("/" + code + "/", function(req, res){
+        /*app.get("/" + code + "/", function(req, res){
             res.sendfile('public/session/index.html');
-        });
+        });*/
     });
 });
 /*end handling the index server side */
@@ -286,4 +330,6 @@ if (room) {
 return res;
 
 }
+
+
 

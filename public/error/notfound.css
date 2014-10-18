@@ -1,0 +1,70 @@
+body
+{
+    background:#d4d4d4;
+    margin: 0px;
+    font-family:helvetica;
+}
+#mainMessage
+{
+    color:#888;
+    width: 700px;
+    height:400px;
+    position:absolute;
+    left:50%;
+    top:100px;
+    margin-left:-350px;
+    font-family:helvetica-light;
+    font-size:25px;
+}
+
+#mainMessage span
+{
+    color:#a7a7a7;
+    font-size:250px;
+}
+
+html
+{
+    -o-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    user-select: none; 
+}
+#header
+{
+    position:absolute;
+    height:70px;
+    width:100%;
+    margin:0px;
+    /*background:#2885ce; old blue background */
+    background: #f1f1f1;
+    color: #919191;
+}
+
+
+#logoContainer
+{
+    position:relative;
+    margin-left:100px;
+    padding-top:5px;
+}
+.submitButton
+{
+    outline:none;
+    background:#41cb41;
+    border:0px;
+    border-bottom-left-radius:3px;
+    border-bottom-right-radius:3px;
+    color:white;
+    height:50px;
+    width:370px;
+    font-size:20px;
+    font-weight:normal;
+    cursor:pointer;
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", helvetica, arial, "Lucida Grande", "sans-serif";
+}
+
+.submitButton:active
+{
+    background:#3eb93e;
+}
