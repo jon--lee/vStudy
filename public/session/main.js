@@ -191,6 +191,8 @@ if(!gettingUserMedia){
 
 if (location.hostname != "localhost") {
     //requestTurn('https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913');
+    requestTurn('stun:stun.l.google.com:19302');
+
     //requestTurn('');
 }
 
