@@ -283,8 +283,8 @@ function requestTurn(turn_url) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
       if (xhr.readyState === 4 && xhr.status === 200) {
+          
         var turnServer = JSON.parse(xhr.responseText);
-      	//console.log('Got TURN server: ', turnServer);
         pc_config.iceServers.push({
           'url': 'turn:' + turnServer.username + '@' + turnServer.turn,
           'credential': turnServer.password
