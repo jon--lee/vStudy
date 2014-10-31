@@ -190,8 +190,8 @@ if(!gettingUserMedia){
 //console.log('Getting user media with constraints', constraints);
 
 if (location.hostname != "localhost") {
-  //requestTurn('https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913');
-    requestTurn('');
+    requestTurn('https://computeengineondemand.appspot.com/turn?username=41784574&key=4080218913');
+    //requestTurn('');
 }
 
 function maybeStart() {
@@ -270,6 +270,7 @@ function setLocalAndSendMessage(sessionDescription) {
 
 function requestTurn(turn_url) {
   var turnExists = false;
+    console.log("turn request");
   for (var i in pc_config.iceServers) {
     if (pc_config.iceServers[i].url.substr(0, 5) === 'turn:') {
       turnExists = true;
@@ -283,8 +284,9 @@ function requestTurn(turn_url) {
     var xhr = new XMLHttpRequest();
     xhr.onreadystatechange = function(){
       if (xhr.readyState === 4 && xhr.status === 200) {
-          
+        console.log("xhr response to be parsed: " + xhr.responseText);
         var turnServer = JSON.parse(xhr.responseText);
+      	console.log('Got TURN server: ', turnServer);
         pc_config.iceServers.push({
           'url': 'turn:' + turnServer.username + '@' + turnServer.turn,
           'credential': turnServer.password
