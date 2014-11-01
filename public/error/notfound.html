@@ -1,0 +1,37 @@
+<html>
+    <head>
+        <title>Oops!</title>
+        <link rel='stylesheet' type='text/css' href='../error/notfound.css'></link>
+    </head>
+    <body>
+        <div id='header'>
+                <div id='logoContainer'>
+                    <span style='font-size:40px'>v<span style='color: #000'>Study</span></span>
+                    <!--<span id='navigationLinks'>
+                        <a href='signin' target="_self">Sign in</a>
+                        <a href='signup' target="_self">Sign up</a>
+                        <a href='about' target="_self">About</a>
+                        <a href='contact' target="_self">Contact us</a>
+                    </span>-->
+                </div>
+        </div>
+        
+        <div id='mainMessage'>
+            <center>
+                <span>&#58;&#40;</span>
+                <br>
+                Looks like you took a wrong turn! This page has expired.
+                <br>
+                <br>
+                <button class='submitButton' id='homeButton'>Go back home!</button>
+            </center>
+        </div>
+        <script src='../js/jquery.js'></script>
+        <script>
+            $('#homeButton').click(function(){
+                window.location = "http://www.vstudy.co";
+            });
+        </script>
+    </body>
+
+</html>
