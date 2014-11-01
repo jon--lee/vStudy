@@ -9,10 +9,10 @@ var Log = require('./Log.js');
 function arrayContains(haystack, needle)
 {
     var r = false;
-    console.log(JSON.stringify(haystack));
+    //console.log(JSON.stringify(haystack));
     for (var i = 0; i < haystack.length; i++)
     {
-        console.log("comparing: " + haystack[i] + " with: " + needle);
+        //console.log("comparing: " + haystack[i] + " with: " + needle);
         if(haystack[i] == needle)
         {
             r = true;
@@ -36,12 +36,12 @@ app.get('/session/', function(req, res){
 app.get('/:id/', function(req, res, next){
     if(arrayContains(sessions, req.params.id) == true)
     {
-        console.log("it contains!");
+        //console.log("it contains!");
         res.sendfile('public/session/index.html');
     }
     else
     {
-        console.log("it does not contain! boo...");
+        //console.log("it does not contain! boo...");
         var err = new Error();
         err.status = 404;
         next(err);    
@@ -141,10 +141,11 @@ sessionNSP.on('connection', function (socket){
 	}
 
     //the server receives this message, logs it, then sends it right back to everyone else
-	socket.on('message', function (message) {
+	socket.on('message', function (room, message) {
 		log('Got message: ', message);
     // For a real app, should be room only (not broadcast)
-		socket.broadcast.emit('message', message);
+		//socket.broadcast.emit('message', message);
+        socket.broadcast.to(room).emit("message", message);
 	});
 
 	socket.on('create or join', function (room, localDims) {
@@ -163,6 +164,7 @@ sessionNSP.on('connection', function (socket){
             roomsClient[socket.id].push(room);
 			socket.emit('joined', room);
 		} else { // max two clients
+            console.log("full man!");
             socket.join(room);
 			socket.emit('full', room);
 		}
@@ -285,6 +287,7 @@ function getNumClients(room)
             numClients++;
         }
     }
+    console.log("num clients: " + numClients);
     return numClients;
 }
 

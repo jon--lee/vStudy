@@ -103,7 +103,7 @@ function sendMessage(message){
   // if (typeof message === 'object') {
   //   message = JSON.stringify(message);
   // }
-  socket.emit('message', message);
+  socket.emit('message', room, message);
 }
 
 //everyone else receives the message, logs it
