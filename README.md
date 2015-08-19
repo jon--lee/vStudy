@@ -2,7 +2,7 @@
 Web application that provides real-time video, audio and whiteboard communication
 between students and/or teachers.
 
-This application uses Node.js with WebRTC. Chrome, Firefox and Opera recommended.
+This application uses Node.js with WebRTC. Chrome or Firefox recommended.
 
 Try it yourself here: [http://www.vstudy.co](http://www.vstudy.co)
 
